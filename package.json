@@ -1,0 +1,12 @@
+{
+  "name": "devobank",
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@types/bun": "latest",
+    "kysely-ctl": "^0.10.1"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "workspaces": ["apps/*", "packages/*"]
+}
