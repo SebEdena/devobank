@@ -2,10 +2,10 @@ services:
   main-db:
     image: postgres:17-alpine
     ports:
-      - "5432:5432"
+      - "${PG_PORT}:5432"
     volumes:
       - ./packages/main-db/.pgdata:/var/lib/postgresql/data
     environment:
-      POSTGRES_DB: devobank-main
-      POSTGRES_USER: devobank
-      POSTGRES_PASSWORD: devobank
+      POSTGRES_DB: ${PG_DATABASE}
+      POSTGRES_USER: ${PG_USER}
+      POSTGRES_PASSWORD: ${PG_PASSWORD}

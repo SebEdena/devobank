@@ -1,14 +1,23 @@
 {
   "name": "main-db",
   "module": "index.ts",
+  "scripts": {
+    "codegen": "bun run bin/codegen.ts"
+  },
   "devDependencies": {
-    "@types/bun": "latest"
+    "@faker-js/faker": "^9.3.0",
+    "@types/bun": "latest",
+    "kysely-codegen": "^0.17.0",
+    "kysely-ctl": "^0.10.1"
   },
   "peerDependencies": {
     "typescript": "^5.0.0"
   },
   "type": "module",
   "dependencies": {
-    "kysely": "^0.27.5"
+    "@devobank/config": "workspace:*",
+    "kysely": "^0.27.5",
+    "kysely-postgres-js": "^2.0.0",
+    "postgres": "^3.4.5"
   }
 }

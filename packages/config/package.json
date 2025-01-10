@@ -1,0 +1,14 @@
+{
+  "name": "@devobank/config",
+  "module": "index.ts",
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "type": "module",
+  "dependencies": {
+    "@sinclair/typebox": "^0.34.13"
+  }
+}
