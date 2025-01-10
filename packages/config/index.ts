@@ -2,6 +2,7 @@ import { type Static, Type } from "@sinclair/typebox";
 import { Value } from "@sinclair/typebox/value";
 
 const Config = Type.Object({
+  env: Type.String({ default: "local" }),
   pg: Type.Object({
     host: Type.String({ default: "localhost" }),
     port: Type.Number({ default: 5432 }),
@@ -15,6 +16,7 @@ const Config = Type.Object({
 type Config = Static<typeof Config>;
 
 export const config = Value.Parse(Config, {
+  env: process.env.ENV,
   pg: {
     host: process.env.PG_HOST,
     port: process.env.PG_PORT,
