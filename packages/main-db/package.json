@@ -1,5 +1,5 @@
 {
-  "name": "main-db",
+  "name": "@devobank/main-db",
   "module": "index.ts",
   "scripts": {
     "codegen": "bun run bin/codegen.ts"
