@@ -176,3 +176,4 @@ dist
 
 # Data directories
 .pgdata
+.rmqdata
