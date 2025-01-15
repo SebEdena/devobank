@@ -16,7 +16,7 @@
   },
   "type": "module",
   "dependencies": {
-    "@devobank/config": "workspace:*",
+    "@sinclair/typebox": "^0.34.13",
     "kysely": "^0.27.5",
     "kysely-postgres-js": "^2.0.0",
     "postgres": "^3.4.5"

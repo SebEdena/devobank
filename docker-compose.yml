@@ -15,6 +15,9 @@ services:
           action: rebuild
     ports:
       - "3000:3000"
+    depends_on:
+      - main-db
+      - rabbitmq
 
   main-db:
     image: postgres:17-alpine

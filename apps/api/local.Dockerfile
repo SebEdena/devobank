@@ -5,7 +5,6 @@ WORKDIR /app
 COPY package.json .
 COPY bun.lockb .
 COPY packages/main-db packages/main-db
-COPY packages/config packages/config
 COPY apps/api apps/api
 
 RUN bun install --filter="@devobank/api" --production
