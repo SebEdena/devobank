@@ -1,17 +1,17 @@
-import { config } from "@devobank/config";
 import { $ } from "bun";
+import { config } from "../src/config";
 
 const url = [
   "postgres://",
-  config.pg.user,
+  config.PG_USER,
   ":",
-  config.pg.password,
+  config.PG_PASSWORD,
   "@",
-  config.pg.host,
+  config.PG_HOST,
   ":",
-  config.pg.port,
+  config.PG_PORT,
   "/",
-  config.pg.database,
+  config.PG_DATABASE,
 ].join("");
 
 const file = "src/models.ts";

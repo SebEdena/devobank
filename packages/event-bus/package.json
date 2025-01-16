@@ -1,0 +1,16 @@
+{
+  "name": "@devobank/event-bus",
+  "module": "index.ts",
+  "type": "module",
+  "devDependencies": {
+    "@types/amqplib": "^0.10.6",
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5.7.2"
+  },
+  "dependencies": {
+    "@sinclair/typebox": "0.34.13",
+    "amqplib": "^0.10.5"
+  }
+}

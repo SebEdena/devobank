@@ -8,8 +8,8 @@
   "peerDependencies": {
     "typescript": "^5.0.0"
   },
-  "workspaces": ["apps/*", "packages/*"],
   "trustedDependencies": [
     "@biomejs/biome"
-  ]
+  ],
+  "workspaces": ["apps/*", "packages/*"]
 }
