@@ -7,6 +7,7 @@ const Config = Type.Object({
   MQ_USER: Type.String({ default: "admin" }),
   MQ_PASSWORD: Type.String({ default: "admin" }),
   MQ_EVENT_QUEUE: Type.String({ default: "event-queue" }),
+  MQ_EXCHANGE: Type.String({ default: "event-exchange" }),
 });
 
 export type Config = Static<typeof Config>;

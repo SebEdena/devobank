@@ -6,13 +6,12 @@ export abstract class MQClient {
 
   constructor(
     protected _options: Partial<{ host: string; user: string; password: string }>,
+    protected _exchange: string,
     protected _queue: string,
   ) {}
 
   async connect() {
     try {
-      console.log(this._options);
-
       process.on("SIGTERM", async () => await this.disconnect());
 
       const connection = await amqp.connect({
@@ -23,8 +22,10 @@ export abstract class MQClient {
       this._connection = connection;
 
       const channel = await connection.createChannel();
-      await channel.assertQueue(this._queue, { durable: true });
+      await channel.assertExchange(this._exchange, "fanout", { durable: true });
       await channel.prefetch(1);
+      const { queue } = await channel.assertQueue(this._queue, { durable: true });
+      await channel.bindQueue(queue, this._exchange, "");
       this._channel = channel;
     } catch (error) {
       this.disconnect();
@@ -34,8 +35,6 @@ export abstract class MQClient {
 
   async disconnect() {
     try {
-      console.log("disconnecting");
-
       if (this._channel) {
         await this._channel.close();
         this._channel = undefined;
