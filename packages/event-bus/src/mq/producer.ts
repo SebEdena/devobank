@@ -1,4 +1,4 @@
-import type { MQEvent, MQEventPayload } from "../event";
+import type { MQEvent, MQEventPayload } from "../events";
 import { MQClient } from "./client";
 
 export class MQProducer extends MQClient {

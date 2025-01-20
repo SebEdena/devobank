@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "@devobank/main-db": "workspace:*",
+    "@devobank/event-bus": "workspace:*",
     "@elysiajs/bearer": "^1.2.0",
     "@elysiajs/jwt": "^1.2.0",
     "@sinclair/typebox": "0.34.13",

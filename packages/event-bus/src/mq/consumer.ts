@@ -1,5 +1,5 @@
-import type { MQEvent, MQEventPayload } from "../event";
-import { parseEventFromMq } from "../events/event-factory";
+import type { MQEvent, MQEventPayload } from "../events";
+import { parseEventFromMq } from "../events";
 import type { MQEventProcessor } from "../processor";
 import { MQClient } from "./client";
 

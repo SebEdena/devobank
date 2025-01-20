@@ -1,4 +1,4 @@
-import { MQEvent, type MQEventPayload } from "../event";
+import { MQEvent, type MQEventPayload } from ".";
 
 export interface UserCreatedPayload extends MQEventPayload {
   userId: string;
