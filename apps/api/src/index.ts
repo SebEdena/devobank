@@ -1,11 +1,5 @@
-import { Elysia, t } from "elysia";
-import { authController } from "./auth/controller";
-import { userController } from "./user/controller";
+import { app } from "./app";
 
-const app = new Elysia()
-  .get("/", () => "Hello Elysia")
-  .use(authController)
-  .use(userController)
-  .listen(3000);
+const { server } = app.listen(3000);
 
-console.log(`🦊 Elysia is running at ${app.server?.hostname}:${app.server?.port}`);
+console.log(`🦊 Elysia is running at ${server?.hostname}:${server?.port}`);

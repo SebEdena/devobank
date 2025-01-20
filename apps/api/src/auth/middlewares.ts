@@ -8,10 +8,10 @@ export const accessTokenJwt = jwt({
   secret: "blablabla",
 });
 
-export const authPlugin = new Elysia()
+export const authPlugin = new Elysia({ name: "auth.plugin" })
   .use(accessTokenJwt)
   .use(bearer())
-  .derive({ as: "scoped" }, async ({ accessTokenJwt, bearer, error }) => {
+  .derive({ as: "global" }, async ({ accessTokenJwt, bearer, error }) => {
     const data = await accessTokenJwt.verify(bearer);
     if (!data) {
       return error(401);

@@ -1,19 +1,13 @@
-import jwt from "@elysiajs/jwt";
-import Elysia, { t } from "elysia";
-import { GetUserQuery } from "../user/queries/get-user";
-import { SignDTO } from "./schemas";
-import { CreateUserCommand } from "../user/commands/create-user";
 import { Value } from "@sinclair/typebox/value";
+import Elysia from "elysia";
+import { CreateUserCommand } from "../user/commands/create-user";
+import { GetUserQuery } from "../user/queries/get-user";
 import { UserRead } from "../user/schemas";
+import { accessTokenJwt } from "./middlewares";
+import { SignDTO } from "./schemas";
 
 export const authController = new Elysia({ prefix: "/auth" })
-  .use(
-    jwt({
-      name: "accessTokenJwt",
-      exp: "1h",
-      secret: "blablabla",
-    }),
-  )
+  .use(accessTokenJwt)
   .post(
     "/sign-in",
     async ({ accessTokenJwt, body: { email, password }, error }) => {
