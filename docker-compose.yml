@@ -3,21 +3,57 @@ services:
     build: 
       context: .
       dockerfile: ./apps/api/local.Dockerfile
+    environment:
+      MQ_HOST: rabbitmq
+    ports:
+      - "3000:3000"
+    depends_on:
+      main-db:
+        condition: service_started
+      rabbitmq:
+        condition: service_healthy
     develop:
       watch:
         - path: ./apps/api
           action: sync
-          target: /app
+          target: /app/apps/api
+          ignore: 
+              - node_modules/
+
+        - path: ./packages
+          action: sync
+          target: /app/packages
           ignore:
               - node_modules/
 
         - path: ./apps/api/package.json
           action: rebuild
-    ports:
-      - "3000:3000"
+
+  event-processor:
+    build: 
+      context: .
+      dockerfile: ./apps/event-processor/local.Dockerfile
+    environment:
+      MQ_HOST: rabbitmq
     depends_on:
-      - main-db
-      - rabbitmq
+      rabbitmq:
+        condition: service_healthy
+    develop:
+      watch:
+        - path: ./apps/event-processor
+          action: sync
+          target: /app/apps/event-processor
+          ignore:
+              - node_modules/
+
+        - path: ./packages
+          action: sync
+          target: /app/packages
+          ignore:
+              - node_modules/ 
+
+        - path: ./apps/event-processor/package.json
+          action: rebuild
 
   main-db:
     image: postgres:17-alpine
@@ -40,3 +76,8 @@ services:
     environment:
       RABBITMQ_DEFAULT_USER: ${MQ_USER}
       RABBITMQ_DEFAULT_PASS: ${MQ_PASSWORD}
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 5s
+      timeout: 10s
+      retries: 3
