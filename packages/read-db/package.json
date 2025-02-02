@@ -1,5 +1,5 @@
 {
-  "name": "@devobank/main-db",
+  "name": "@devobank/read-db",
   "type": "module",
   "module": "index.ts",
   "scripts": {
