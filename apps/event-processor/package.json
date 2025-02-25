@@ -7,7 +7,8 @@
   },
   "dependencies": {
     "@devobank/event-bus": "workspace:*",
-    "@elysiajs/node": "^1.2.6"
+    "@elysiajs/node": "^1.2.6",
+    "@sinclair/typebox": "0.34.13"
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
