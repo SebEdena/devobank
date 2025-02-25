@@ -1,13 +1,15 @@
-FROM oven/bun
+FROM node:22-slim AS base
+ENV PNPM_HOME="/pnpm"
+ENV PATH="$PNPM_HOME:$PATH"
+RUN corepack enable
 
+FROM base AS build
 WORKDIR /app
+COPY . .
+RUN pnpm install --frozen-lockfile
+RUN pnpm deploy --filter=@devobank/event-processor event-processor
 
-COPY package.json .
-COPY bun.lockb .
-COPY packages/event-bus packages/event-bus
-COPY apps/event-processor apps/event-processor
-
-RUN bun install --filter="@devobank/event-processor"
-
-ENV NODE_ENV production
-CMD ["bun", "run", "--watch", "apps/event-processor/src/index.ts"]
+FROM base AS event-processor
+WORKDIR /app
+COPY --from=build /app/event-processor .
+CMD ["pnpm", "run", "dev"]

@@ -2,15 +2,17 @@
   "name": "@devobank/event-bus",
   "module": "index.ts",
   "type": "module",
+  "dependencies": {
+    "@elysiajs/node": "^1.2.6",
+    "@sinclair/typebox": "0.34.13",
+    "amqplib": "^0.10.5"
+  },
   "devDependencies": {
     "@types/amqplib": "^0.10.6",
-    "@types/bun": "latest"
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.3"
   },
   "peerDependencies": {
     "typescript": "^5.7.2"
-  },
-  "dependencies": {
-    "@sinclair/typebox": "0.34.13",
-    "amqplib": "^0.10.5"
   }
 }

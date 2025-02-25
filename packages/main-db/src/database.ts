@@ -11,6 +11,7 @@ export const dialect = new PostgresJSDialect({
     username: config.PG_USER,
     password: config.PG_PASSWORD,
     database: config.PG_DATABASE,
+    debug: config.ENV === "local",
   }),
 });
 

@@ -5,8 +5,9 @@ import { GetUserQuery } from "../user/queries/get-user";
 import { UserRead } from "../user/schemas";
 import { accessTokenJwt } from "./middlewares";
 import { SignDTO } from "./schemas";
+import node from "@elysiajs/node";
 
-export const authController = new Elysia({ prefix: "/auth" })
+export const authController = new Elysia({ adapter: node(), prefix: "/auth" })
   .use(accessTokenJwt)
   .post(
     "/sign-in",

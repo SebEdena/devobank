@@ -6,7 +6,8 @@ services:
     environment:
       MQ_HOST: rabbitmq
     ports:
-      - "3000:3000"
+      - "8080:8080"
+      - "6499:6499"
     depends_on:
       main-db:
         condition: service_started
@@ -83,7 +84,7 @@ services:
       - "5672:5672"
       - "15672:15672"
     volumes:
-      - .data/event-bus:/var/lib/rabbitmq
+      - .data/event-bus:/var/lib/rabbitmq/mnesia
     environment:
       RABBITMQ_DEFAULT_USER: ${MQ_USER}
       RABBITMQ_DEFAULT_PASS: ${MQ_PASSWORD}
