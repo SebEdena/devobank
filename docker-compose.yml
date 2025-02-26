@@ -2,12 +2,13 @@ services:
   api:
     build: 
       context: .
-      dockerfile: ./apps/api/local.Dockerfile
+      dockerfile: local.Dockerfile
+      target: api
     environment:
       MQ_HOST: rabbitmq
     ports:
       - "8080:8080"
-      - "6499:6499"
+      - "9229:9229"
     depends_on:
       main-db:
         condition: service_started
@@ -17,12 +18,13 @@ services:
       watch:
         - path: ./apps/api
           action: sync
-          target: /app/apps/api
+          target: /app
           ignore: 
+              - package.json
               - node_modules/
 
         - path: ./packages
-          action: sync
+          action: rebuild
           target: /app/packages
           ignore:
               - node_modules/
@@ -33,7 +35,8 @@ services:
   event-processor:
     build: 
       context: .
-      dockerfile: ./apps/event-processor/local.Dockerfile
+      dockerfile: local.Dockerfile
+      target: event-processor
     environment:
       MQ_HOST: rabbitmq
     depends_on:
