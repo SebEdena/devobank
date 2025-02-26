@@ -1,8 +1,8 @@
+import { node } from "@elysiajs/node";
 import Elysia, { type InferContext } from "elysia";
 import { authController } from "./auth/controller";
 import { authPlugin } from "./auth/middlewares";
 import { userController } from "./user/controller";
-import { node } from "@elysiajs/node";
 
 const setup = new Elysia({ adapter: node() })
   .get("/", () => "Hello Elysia")

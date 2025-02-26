@@ -10,6 +10,8 @@
     "@elysiajs/jwt": "^1.2.0",
     "@elysiajs/node": "^1.2.6",
     "@sinclair/typebox": "0.34.13",
+    "@types/bcrypt": "^5.0.2",
+    "bcrypt": "^5.1.1",
     "elysia": "latest"
   },
   "devDependencies": {

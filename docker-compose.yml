@@ -5,6 +5,8 @@ services:
       dockerfile: local.Dockerfile
       target: api
     environment:
+      PG_HOST_MAIN: main-db
+      PG_HOST_READ: read-db
       MQ_HOST: rabbitmq
     ports:
       - "8080:8080"
@@ -67,8 +69,8 @@ services:
       - .data/main-db:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: ${PG_DATABASE_MAIN}
-      POSTGRES_USER: ${PG_USER}
-      POSTGRES_PASSWORD: ${PG_PASSWORD}
+      POSTGRES_USER: ${PG_USER_MAIN}
+      POSTGRES_PASSWORD: ${PG_PASSWORD_MAIN}
 
   read-db:
     image: postgres:17-alpine
@@ -78,8 +80,8 @@ services:
       - .data/read-db:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: ${PG_DATABASE_READ}
-      POSTGRES_USER: ${PG_USER}
-      POSTGRES_PASSWORD: ${PG_PASSWORD}
+      POSTGRES_USER: ${PG_USER_READ}
+      POSTGRES_PASSWORD: ${PG_PASSWORD_READ}
   
   rabbitmq:
     image: rabbitmq:4-management-alpine
