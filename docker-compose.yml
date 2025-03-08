@@ -68,9 +68,9 @@ services:
     volumes:
       - .data/main-db:/var/lib/postgresql/data
     environment:
-      POSTGRES_DB: ${PG_DATABASE_MAIN}
-      POSTGRES_USER: ${PG_USER_MAIN}
-      POSTGRES_PASSWORD: ${PG_PASSWORD_MAIN}
+      POSTGRES_DB: devobank-main
+      POSTGRES_USER: devobank
+      POSTGRES_PASSWORD: devobank
 
   read-db:
     image: postgres:17-alpine
@@ -79,9 +79,9 @@ services:
     volumes:
       - .data/read-db:/var/lib/postgresql/data
     environment:
-      POSTGRES_DB: ${PG_DATABASE_READ}
-      POSTGRES_USER: ${PG_USER_READ}
-      POSTGRES_PASSWORD: ${PG_PASSWORD_READ}
+      POSTGRES_DB: devobank-read
+      POSTGRES_USER: devobank
+      POSTGRES_PASSWORD: devobank
   
   rabbitmq:
     image: rabbitmq:4-management-alpine
@@ -91,8 +91,8 @@ services:
     volumes:
       - .data/event-bus:/var/lib/rabbitmq/mnesia
     environment:
-      RABBITMQ_DEFAULT_USER: ${MQ_USER}
-      RABBITMQ_DEFAULT_PASS: ${MQ_PASSWORD}
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
     healthcheck:
       test: rabbitmq-diagnostics -q ping
       interval: 5s

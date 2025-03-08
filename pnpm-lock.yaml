@@ -8,17 +8,19 @@ settings:
 importers:
 
   .:
-    dependencies:
-      typescript:
-        specifier: ^5.0.0
-        version: 5.7.3
     devDependencies:
       '@biomejs/biome':
         specifier: ^1.9.4
         version: 1.9.4
-      kysely-ctl:
-        specifier: ^0.10.1
-        version: 0.10.1(kysely-postgres-js@2.0.0(kysely@0.27.5)(postgres@3.4.5))(kysely@0.27.5)
+      '@types/node':
+        specifier: ^22.0.0
+        version: 22.13.5
+      tsx:
+        specifier: ^4.19.3
+        version: 4.19.3
+      typescript:
+        specifier: ^5.7.3
+        version: 5.7.3
 
   apps/api:
     dependencies:
@@ -43,16 +45,15 @@ importers:
       '@types/bcrypt':
         specifier: ^5.0.2
         version: 5.0.2
+      '@types/node':
+        specifier: ^22.0.0
+        version: 22.13.5
       bcrypt:
         specifier: ^5.1.1
         version: 5.1.1
       elysia:
         specifier: latest
         version: 1.2.22(@sinclair/typebox@0.34.13)(typescript@5.7.3)
-    devDependencies:
-      '@types/node':
-        specifier: ^22.0.0
-        version: 22.13.5
       tsx:
         specifier: ^4.19.3
         version: 4.19.3
@@ -71,7 +72,6 @@ importers:
       '@sinclair/typebox':
         specifier: 0.34.13
         version: 0.34.13
-    devDependencies:
       '@types/node':
         specifier: ^22.0.0
         version: 22.13.5
@@ -79,7 +79,7 @@ importers:
         specifier: ^4.19.3
         version: 4.19.3
       typescript:
-        specifier: ^5.7.2
+        specifier: ^5.7.3
         version: 5.7.3
 
   packages/event-bus:
@@ -90,22 +90,22 @@ importers:
       '@sinclair/typebox':
         specifier: 0.34.13
         version: 0.34.13
+      '@types/node':
+        specifier: ^22.0.0
+        version: 22.13.5
       amqplib:
         specifier: ^0.10.5
         version: 0.10.5
+      tsx:
+        specifier: ^4.19.3
+        version: 4.19.3
       typescript:
-        specifier: ^5.7.2
+        specifier: ^5.7.3
         version: 5.7.3
     devDependencies:
       '@types/amqplib':
         specifier: ^0.10.6
         version: 0.10.6
-      '@types/node':
-        specifier: ^22.0.0
-        version: 22.13.5
-      tsx:
-        specifier: ^4.19.3
-        version: 4.19.3
 
   packages/main-db:
     dependencies:
@@ -118,6 +118,9 @@ importers:
       '@types/bcrypt':
         specifier: ^5.0.2
         version: 5.0.2
+      '@types/node':
+        specifier: ^22.0.0
+        version: 22.13.5
       bcrypt:
         specifier: ^5.1.1
         version: 5.1.1
@@ -136,19 +139,16 @@ importers:
       postgres:
         specifier: ^3.4.5
         version: 3.4.5
+      tsx:
+        specifier: ^4.19.3
+        version: 4.19.3
       typescript:
-        specifier: ^5.7.2
+        specifier: ^5.7.3
         version: 5.7.3
     devDependencies:
       '@faker-js/faker':
         specifier: ^9.3.0
         version: 9.5.0
-      '@types/node':
-        specifier: ^22.13.5
-        version: 22.13.5
-      tsx:
-        specifier: ^4.19.3
-        version: 4.19.3
 
   packages/read-db:
     dependencies:
@@ -161,6 +161,9 @@ importers:
       '@types/bcrypt':
         specifier: ^5.0.2
         version: 5.0.2
+      '@types/node':
+        specifier: ^22.0.0
+        version: 22.13.5
       bcrypt:
         specifier: ^5.1.1
         version: 5.1.1
@@ -179,19 +182,16 @@ importers:
       postgres:
         specifier: ^3.4.5
         version: 3.4.5
+      tsx:
+        specifier: ^4.19.3
+        version: 4.19.3
       typescript:
-        specifier: ^5.7.2
+        specifier: ^5.7.3
         version: 5.7.3
     devDependencies:
       '@faker-js/faker':
         specifier: ^9.3.0
         version: 9.5.0
-      '@types/node':
-        specifier: ^22.13.5
-        version: 22.13.5
-      tsx:
-        specifier: ^4.19.3
-        version: 4.19.3
 
 packages:
 

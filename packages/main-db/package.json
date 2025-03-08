@@ -3,8 +3,8 @@
   "type": "module",
   "module": "index.ts",
   "scripts": {
-    "db-codegen": "bun run bin/codegen.ts",
-    "db": "bun --bun kysely"
+    "db-codegen": "tsx bin/codegen.ts",
+    "db": "kysely"
   },
   "dependencies": {
     "@elysiajs/node": "^1.2.6",
@@ -18,11 +18,11 @@
     "postgres": "^3.4.5"
   },
   "devDependencies": {
-    "@faker-js/faker": "^9.3.0",
-    "@types/node": "^22.13.5",
-    "tsx": "^4.19.3"
+    "@faker-js/faker": "^9.3.0"
   },
   "peerDependencies": {
-    "typescript": "^5.7.2"
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.3",
+    "typescript": "^5.7.3"
   }
 }
