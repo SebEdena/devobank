@@ -1,15 +1,19 @@
 {
   "name": "devobank",
+  "scripts": {
+    "db:latest": "pnpm --filter '*-db' run db migrate:latest",
+    "db:seed": "pnpm --filter '*-db' run db seed:run"
+  },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
-    "@types/bun": "latest",
-    "kysely-ctl": "^0.10.1"
+    "@types/node": "^22.0.0",
+    "tsx": "^4.19.3",
+    "typescript": "^5.7.3"
   },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
+  "trustedDependencies": ["@biomejs/biome"],
+  "workspaces": ["apps/*", "packages/*"],
+  "pnpm": {
+    "onlyBuiltDependencies": ["@biomejs/biome", "bcrypt", "esbuild"]
   },
-  "trustedDependencies": [
-    "@biomejs/biome"
-  ],
-  "workspaces": ["apps/*", "packages/*"]
+  "packageManager": "pnpm@10.5.0+sha512.11106a5916c7406fe4b8cb8e3067974b8728f47308a4f5ac5e850304afa6f57e2847d7950dfe78877d8d36bfb401d381c4215db3a4c3547ffa63c14333a6fa51"
 }

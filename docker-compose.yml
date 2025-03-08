@@ -2,11 +2,15 @@ services:
   api:
     build: 
       context: .
-      dockerfile: ./apps/api/local.Dockerfile
+      dockerfile: local.Dockerfile
+      target: api
     environment:
+      PG_HOST_MAIN: main-db
+      PG_HOST_READ: read-db
       MQ_HOST: rabbitmq
     ports:
-      - "3000:3000"
+      - "8080:8080"
+      - "9229:9229"
     depends_on:
       main-db:
         condition: service_started
@@ -16,12 +20,13 @@ services:
       watch:
         - path: ./apps/api
           action: sync
-          target: /app/apps/api
+          target: /app
           ignore: 
+              - package.json
               - node_modules/
 
         - path: ./packages
-          action: sync
+          action: rebuild
           target: /app/packages
           ignore:
               - node_modules/
@@ -32,7 +37,8 @@ services:
   event-processor:
     build: 
       context: .
-      dockerfile: ./apps/event-processor/local.Dockerfile
+      dockerfile: local.Dockerfile
+      target: event-processor
     environment:
       MQ_HOST: rabbitmq
     depends_on:
@@ -62,9 +68,9 @@ services:
     volumes:
       - .data/main-db:/var/lib/postgresql/data
     environment:
-      POSTGRES_DB: ${PG_DATABASE_MAIN}
-      POSTGRES_USER: ${PG_USER}
-      POSTGRES_PASSWORD: ${PG_PASSWORD}
+      POSTGRES_DB: devobank-main
+      POSTGRES_USER: devobank
+      POSTGRES_PASSWORD: devobank
 
   read-db:
     image: postgres:17-alpine
@@ -73,9 +79,9 @@ services:
     volumes:
       - .data/read-db:/var/lib/postgresql/data
     environment:
-      POSTGRES_DB: ${PG_DATABASE_READ}
-      POSTGRES_USER: ${PG_USER}
-      POSTGRES_PASSWORD: ${PG_PASSWORD}
+      POSTGRES_DB: devobank-read
+      POSTGRES_USER: devobank
+      POSTGRES_PASSWORD: devobank
   
   rabbitmq:
     image: rabbitmq:4-management-alpine
@@ -83,10 +89,10 @@ services:
       - "5672:5672"
       - "15672:15672"
     volumes:
-      - .data/event-bus:/var/lib/rabbitmq
+      - .data/event-bus:/var/lib/rabbitmq/mnesia
     environment:
-      RABBITMQ_DEFAULT_USER: ${MQ_USER}
-      RABBITMQ_DEFAULT_PASS: ${MQ_PASSWORD}
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
     healthcheck:
       test: rabbitmq-diagnostics -q ping
       interval: 5s

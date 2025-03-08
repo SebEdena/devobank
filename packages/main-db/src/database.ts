@@ -6,11 +6,12 @@ import type { DB } from "./models";
 
 export const dialect = new PostgresJSDialect({
   postgres: postgres({
-    host: config.PG_HOST,
-    port: config.PG_PORT,
-    username: config.PG_USER,
-    password: config.PG_PASSWORD,
-    database: config.PG_DATABASE,
+    host: config.PG_HOST_MAIN,
+    port: config.PG_PORT_MAIN,
+    username: config.PG_USER_MAIN,
+    password: config.PG_PASSWORD_MAIN,
+    database: config.PG_DATABASE_MAIN,
+    debug: config.ENV === "local",
   }),
 });
 
