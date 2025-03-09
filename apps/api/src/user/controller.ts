@@ -8,7 +8,7 @@ import node from "@elysiajs/node";
 export const userController = new Elysia({ adapter: node(), prefix: "/user" }).get(
   "/me",
   async ({ userId, error }: Context) => {
-    const user = await new GetUserQuery({ email: userId }).execute();
+    const user = await new GetUserQuery({ id: userId }).execute();
 
     if (!user) {
       return error(404);

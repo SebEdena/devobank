@@ -13,9 +13,7 @@ export type Numeric = ColumnType<string, number | string, number | string>;
 
 export interface ReadUser {
   balance: Generated<Numeric>;
-  email: string;
   id: string;
-  password: string;
 }
 
 export interface DB {

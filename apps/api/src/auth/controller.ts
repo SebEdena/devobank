@@ -17,7 +17,7 @@ export const authController = new Elysia({ adapter: node(), prefix: "/auth" })
       if (user === undefined || !bcrypt.compareSync(password, user.password)) {
         return error(401);
       }
-      return await accessTokenJwt.sign({ userId: user.email });
+      return await accessTokenJwt.sign({ userId: user.id });
     },
     {
       body: SignDTO,
