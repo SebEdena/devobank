@@ -1,19 +1,27 @@
-import { $ } from "bun";
+import { exec } from "node:child_process";
 import { config } from "../src/config";
 
 const url = [
   "postgres://",
-  config.PG_USER,
+  config.PG_USER_MAIN,
   ":",
-  config.PG_PASSWORD,
+  config.PG_PASSWORD_MAIN,
   "@",
-  config.PG_HOST,
+  config.PG_HOST_MAIN,
   ":",
-  config.PG_PORT,
+  config.PG_PORT_MAIN,
   "/",
-  config.PG_DATABASE,
+  config.PG_DATABASE_MAIN,
 ].join("");
 
 const file = "src/models.ts";
 
-await $`bun run kysely-codegen --dialect postgres --singular --url ${url} --out-file ${file}`;
+const script = exec(`kysely-codegen --dialect postgres --singular --url ${url} --out-file ${file}`);
+
+script.stdout?.on("data", (data) => {
+  console.log(data);
+});
+
+script.stderr?.on("data", (data) => {
+  console.error(data);
+});
