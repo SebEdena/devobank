@@ -1,5 +1,33 @@
-import { app } from "./app";
+import { Elysia } from "elysia";
+import { bearer } from "@elysiajs/bearer";
+import { createMainDbConnection } from "../../../tmp/infrastructure/database/main-db";
+import { PgUserRepository } from "../../../tmp/interface-adapters/repositories/pg-user-repository";
+import { CreateUserUseCase } from "../../../tmp/use-cases/user/create-user.use-case";
+import { RabbitMQEventEmitter } from "../../../tmp/interface-adapters/messaging/rabbitmq-event-emitter";
+import { createUserController } from "../../../tmp/interface-adapters/controllers/user-controller";
 
-app.listen(8080, ({ url }) => {
-  console.log(`🦊 Elysia is running at ${url}`);
-});
+// Configuration
+const config = {
+  db: {
+    host: process.env.PG_HOST_MAIN || "localhost",
+    port: 5432,
+    database: "devobank-main",
+    user: "devobank",
+    password: "devobank",
+  },
+  eventQueue: "events",
+};
+
+// Setup dependencies
+const mainDb = createMainDbConnection(config.db);
+const userRepository = new PgUserRepository(mainDb);
+const eventEmitter = new RabbitMQEventEmitter(config.eventQueue);
+const createUserUseCase = new CreateUserUseCase(userRepository, eventEmitter);
+
+// Setup controllers
+const userController = createUserController(createUserUseCase);
+
+// Setup API
+const app = new Elysia().use(bearer()).use(userController).listen(8080);
+
+console.log(`API is running at ${app.server?.hostname}:${app.server?.port}`);
