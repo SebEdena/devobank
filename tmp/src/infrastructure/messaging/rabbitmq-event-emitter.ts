@@ -1,4 +1,4 @@
-import { EventEmitter } from "../../domain/interfaces/event-emitter.interface";
+import { EventEmitter } from "../../src/application/providers/event-emitter.interface";
 import { makePublisher } from "@devobank/event-bus";
 
 export class RabbitMQEventEmitter implements EventEmitter {

@@ -32,13 +32,13 @@ importers:
         version: link:../../packages/main-db
       '@elysiajs/bearer':
         specifier: ^1.2.0
-        version: 1.2.0(elysia@1.2.22(@sinclair/typebox@0.34.13)(typescript@5.7.3))
+        version: 1.2.0(elysia@1.2.25(@sinclair/typebox@0.34.13)(typescript@5.7.3))
       '@elysiajs/jwt':
         specifier: ^1.2.0
-        version: 1.2.0(elysia@1.2.22(@sinclair/typebox@0.34.13)(typescript@5.7.3))
+        version: 1.2.0(elysia@1.2.25(@sinclair/typebox@0.34.13)(typescript@5.7.3))
       '@elysiajs/node':
         specifier: ^1.2.6
-        version: 1.2.6(elysia@1.2.22(@sinclair/typebox@0.34.13)(typescript@5.7.3))(formidable@3.5.2)(ws@8.18.1)
+        version: 1.2.6(elysia@1.2.25(@sinclair/typebox@0.34.13)(typescript@5.7.3))(formidable@3.5.2)(ws@8.18.1)
       '@sinclair/typebox':
         specifier: 0.34.13
         version: 0.34.13
@@ -53,7 +53,7 @@ importers:
         version: 5.1.1
       elysia:
         specifier: latest
-        version: 1.2.22(@sinclair/typebox@0.34.13)(typescript@5.7.3)
+        version: 1.2.25(@sinclair/typebox@0.34.13)(typescript@5.7.3)
       tsx:
         specifier: ^4.19.3
         version: 4.19.3
@@ -86,7 +86,7 @@ importers:
     dependencies:
       '@elysiajs/node':
         specifier: ^1.2.6
-        version: 1.2.6(elysia@1.2.22(@sinclair/typebox@0.34.13)(typescript@5.7.3))(formidable@3.5.2)(ws@8.18.1)
+        version: 1.2.6(elysia@1.2.25(@sinclair/typebox@0.34.13)(typescript@5.7.3))(formidable@3.5.2)(ws@8.18.1)
       '@sinclair/typebox':
         specifier: 0.34.13
         version: 0.34.13
@@ -186,6 +186,42 @@ importers:
       '@types/bcrypt':
         specifier: ^5.0.2
         version: 5.0.2
+
+  tmp:
+    dependencies:
+      '@types/node':
+        specifier: ^22.0.0
+        version: 22.13.5
+      bcrypt:
+        specifier: ^5.1.1
+        version: 5.1.1
+      inversify:
+        specifier: 7.0.0-alpha.5
+        version: 7.0.0-alpha.5(reflect-metadata@0.2.2)
+      kysely:
+        specifier: ^0.27.5
+        version: 0.27.5
+      kysely-codegen:
+        specifier: ^0.17.0
+        version: 0.17.0(kysely@0.27.5)
+      kysely-ctl:
+        specifier: ^0.10.1
+        version: 0.10.1(kysely-postgres-js@2.0.0(kysely@0.27.5)(postgres@3.4.5))(kysely@0.27.5)
+      kysely-postgres-js:
+        specifier: ^2.0.0
+        version: 2.0.0(kysely@0.27.5)(postgres@3.4.5)
+      postgres:
+        specifier: ^3.4.5
+        version: 3.4.5
+      reflect-metadata:
+        specifier: ^0.2.2
+        version: 0.2.2
+      tsx:
+        specifier: ^4.19.3
+        version: 4.19.3
+      typescript:
+        specifier: ^5.7.3
+        version: 5.7.3
 
 packages:
 
@@ -421,6 +457,25 @@ packages:
     resolution: {integrity: sha512-3qbjLv+fzuuCg3umxc9/7YjrEXNaKwHgmig949nfyaTx8eL4FAsvFbu+1JcFUj1YAXofhaDn6JdEUBTYuk0Ssw==}
     engines: {node: '>=18.0.0', npm: '>=9.0.0'}
 
+  '@inversifyjs/common@1.5.0':
+    resolution: {integrity: sha512-Qj5BELk11AfI2rgZEAaLPmOftmQRLLmoCXgAjmaF0IngQN5vHomVT5ML7DZ3+CA5fgGcEVMcGbUDAun+Rz+oNg==}
+
+  '@inversifyjs/container@1.5.2':
+    resolution: {integrity: sha512-z0h5iwzA/Gv/1K1ZFHj4VAXpyShOez61g4vWMaWpY4gKidsIbnn01ArRbKbsTKzwW63DniAGMhtnUO+y3htcpQ==}
+    peerDependencies:
+      reflect-metadata: ~0.2.2
+
+  '@inversifyjs/core@4.0.0':
+    resolution: {integrity: sha512-uNK3aFEAn5mnQ1TbPqDDG/4BMNGPZ8Jb+cDW2ualjNCiMqtIDWP2gBQf0zahxSbZnc5iVrkk7ftjX3Raze8BLQ==}
+
+  '@inversifyjs/prototype-utils@0.1.0':
+    resolution: {integrity: sha512-lNz1yyajMRDXBHLvJsYYX81FcmeD15e5Qz1zAZ/3zeYTl+u7ZF/GxNRKJzNOloeMPMtuR8BnvzHA1SZxjR+J9w==}
+
+  '@inversifyjs/reflect-metadata-utils@1.1.0':
+    resolution: {integrity: sha512-jmuAuC3eL1GnFAYfJGJOMKRDL9q1mgzOyrban6zxfM8Yg1FUHsj25h27bW2G7p8X1Amvhg3MLkaOuogszkrofA==}
+    peerDependencies:
+      reflect-metadata: 0.2.2
+
   '@mapbox/node-pre-gyp@1.0.11':
     resolution: {integrity: sha512-Yhlar6v9WQgUp/He7BdgzOz8lqMQ8sU+jkCq7Wx8Myc5YFJLbEe7lgui/V7G1qB1DJykHSGwreceSaD60Y0PUQ==}
     hasBin: true
@@ -591,8 +646,8 @@ packages:
     resolution: {integrity: sha512-47qPchRCykZC03FhkYAhrvwU4xDBFIj1QPqaarj6mdM/hgUzfPHcpkHJOn3mJAufFeeAxAzeGsr5X0M4k6fLZQ==}
     engines: {node: '>=12'}
 
-  elysia@1.2.22:
-    resolution: {integrity: sha512-Cj6PTpdLqzq2xbzdWffMyH6eEBe6NY06SS0Qdq48jU5Qtw/TG2rhiw0UHqxbTkYVAyNbR4EmVeQvNcNgNdE9xg==}
+  elysia@1.2.25:
+    resolution: {integrity: sha512-WsdQpORJvb4uszzeqYT0lg97knw1iBW1NTzJ1Jm57tiHg+DfAotlWXYbjmvQ039ssV0fYELDHinLLoUazZkEHg==}
     peerDependencies:
       '@sinclair/typebox': '>= 0.34.0'
       openapi-types: '>= 12.0.0'
@@ -690,6 +745,11 @@ packages:
   interpret@1.4.0:
     resolution: {integrity: sha512-agE4QfB2Lkp9uICn7BAqoscw4SZP9kTE2hxiFI3jBPmXJfdqiahTbUuKGsMoN2GtqL9AxhYioAcVvgsb1HvRbA==}
     engines: {node: '>= 0.10'}
+
+  inversify@7.0.0-alpha.5:
+    resolution: {integrity: sha512-fl09CyoTZXUc26m0GK65Cxx8B3MNjVb2vhdD/o03Vn9yXGFiQuRInvc3WC64j4QZl2UtRD9kK3Spk1junADT8g==}
+    peerDependencies:
+      reflect-metadata: ~0.2.2
 
   is-core-module@2.16.1:
     resolution: {integrity: sha512-UfoeMA6fIJ8wTYFEUjelnaGI67v6+N7qXJEvQuIGa99l4xsCruSYOVSQ0uPANn4dAzm8lkYPaKLrrijLq7x23w==}
@@ -905,6 +965,9 @@ packages:
     resolution: {integrity: sha512-HFM8rkZ+i3zrV+4LQjwQ0W+ez98pApMGM3HUrN04j3CqzPOzl9nmP15Y8YXNm8QHGv/eacOVEjqhmWpkRV0NAw==}
     engines: {node: '>= 0.10'}
 
+  reflect-metadata@0.2.2:
+    resolution: {integrity: sha512-urBwgfrvVP/eAyXx4hluJivBKzuEbSQs9rKWCrCkbSxNv8mxPcUZKeuoF3Uy4mJl3Lwprp6yy5/39VWigZ4K6Q==}
+
   requires-port@1.0.0:
     resolution: {integrity: sha512-KigOCHcocU3XODJxsu8i/j8T9tzT4adHiecwORRQ0ZZFcp7ahwXuRU1m+yuO90C5ZUyGeGfocHDI14M3L3yDAQ==}
 
@@ -1085,18 +1148,18 @@ snapshots:
   '@biomejs/cli-win32-x64@1.9.4':
     optional: true
 
-  '@elysiajs/bearer@1.2.0(elysia@1.2.22(@sinclair/typebox@0.34.13)(typescript@5.7.3))':
+  '@elysiajs/bearer@1.2.0(elysia@1.2.25(@sinclair/typebox@0.34.13)(typescript@5.7.3))':
     dependencies:
-      elysia: 1.2.22(@sinclair/typebox@0.34.13)(typescript@5.7.3)
+      elysia: 1.2.25(@sinclair/typebox@0.34.13)(typescript@5.7.3)
 
-  '@elysiajs/jwt@1.2.0(elysia@1.2.22(@sinclair/typebox@0.34.13)(typescript@5.7.3))':
+  '@elysiajs/jwt@1.2.0(elysia@1.2.25(@sinclair/typebox@0.34.13)(typescript@5.7.3))':
     dependencies:
-      elysia: 1.2.22(@sinclair/typebox@0.34.13)(typescript@5.7.3)
+      elysia: 1.2.25(@sinclair/typebox@0.34.13)(typescript@5.7.3)
       jose: 4.15.9
 
-  '@elysiajs/node@1.2.6(elysia@1.2.22(@sinclair/typebox@0.34.13)(typescript@5.7.3))(formidable@3.5.2)(ws@8.18.1)':
+  '@elysiajs/node@1.2.6(elysia@1.2.25(@sinclair/typebox@0.34.13)(typescript@5.7.3))(formidable@3.5.2)(ws@8.18.1)':
     dependencies:
-      elysia: 1.2.22(@sinclair/typebox@0.34.13)(typescript@5.7.3)
+      elysia: 1.2.25(@sinclair/typebox@0.34.13)(typescript@5.7.3)
       formidable: 3.5.2
       ws: 8.18.1
 
@@ -1176,6 +1239,31 @@ snapshots:
     optional: true
 
   '@faker-js/faker@9.5.0': {}
+
+  '@inversifyjs/common@1.5.0': {}
+
+  '@inversifyjs/container@1.5.2(reflect-metadata@0.2.2)':
+    dependencies:
+      '@inversifyjs/common': 1.5.0
+      '@inversifyjs/core': 4.0.0(reflect-metadata@0.2.2)
+      '@inversifyjs/reflect-metadata-utils': 1.1.0(reflect-metadata@0.2.2)
+      reflect-metadata: 0.2.2
+
+  '@inversifyjs/core@4.0.0(reflect-metadata@0.2.2)':
+    dependencies:
+      '@inversifyjs/common': 1.5.0
+      '@inversifyjs/prototype-utils': 0.1.0
+      '@inversifyjs/reflect-metadata-utils': 1.1.0(reflect-metadata@0.2.2)
+    transitivePeerDependencies:
+      - reflect-metadata
+
+  '@inversifyjs/prototype-utils@0.1.0':
+    dependencies:
+      '@inversifyjs/common': 1.5.0
+
+  '@inversifyjs/reflect-metadata-utils@1.1.0(reflect-metadata@0.2.2)':
+    dependencies:
+      reflect-metadata: 0.2.2
 
   '@mapbox/node-pre-gyp@1.0.11':
     dependencies:
@@ -1349,7 +1437,7 @@ snapshots:
 
   dotenv@16.4.7: {}
 
-  elysia@1.2.22(@sinclair/typebox@0.34.13)(typescript@5.7.3):
+  elysia@1.2.25(@sinclair/typebox@0.34.13)(typescript@5.7.3):
     dependencies:
       '@sinclair/typebox': 0.34.13
       cookie: 1.0.2
@@ -1480,6 +1568,13 @@ snapshots:
   inherits@2.0.4: {}
 
   interpret@1.4.0: {}
+
+  inversify@7.0.0-alpha.5(reflect-metadata@0.2.2):
+    dependencies:
+      '@inversifyjs/common': 1.5.0
+      '@inversifyjs/container': 1.5.2(reflect-metadata@0.2.2)
+      '@inversifyjs/core': 4.0.0(reflect-metadata@0.2.2)
+      reflect-metadata: 0.2.2
 
   is-core-module@2.16.1:
     dependencies:
@@ -1660,6 +1755,8 @@ snapshots:
   rechoir@0.6.2:
     dependencies:
       resolve: 1.22.10
+
+  reflect-metadata@0.2.2: {}
 
   requires-port@1.0.0: {}
 

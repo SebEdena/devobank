@@ -1,10 +1,10 @@
 import { Elysia } from "elysia";
 import { bearer } from "@elysiajs/bearer";
 import { createMainDbConnection } from "../../../tmp/infrastructure/database/main-db";
-import { PgUserRepository } from "../../../tmp/interface-adapters/repositories/pg-user-repository";
-import { CreateUserUseCase } from "../../../tmp/use-cases/user/create-user.use-case";
-import { RabbitMQEventEmitter } from "../../../tmp/interface-adapters/messaging/rabbitmq-event-emitter";
-import { createUserController } from "../../../tmp/interface-adapters/controllers/user-controller";
+import { PgUserRepository } from "../../../tmp/infrastructure/repositories/pg-user-repository";
+import { CreateUserUseCase } from "../../../tmp/src/application/use-cases/user/create-user.use-case";
+import { RabbitMQEventEmitter } from "../../../tmp/infrastructure/messaging/rabbitmq-event-emitter";
+import { createUserController } from "../../../tmp/src/application/controllers/user-controller";
 
 // Configuration
 const config = {

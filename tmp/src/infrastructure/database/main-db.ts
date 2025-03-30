@@ -1,6 +1,6 @@
 import { Kysely, PostgresDialect } from "kysely";
 import { Pool } from "pg";
-import { Database } from "../../interface-adapters/database/main-db.types";
+import { Database } from "../../src/application/database/main-db.types";
 
 export function createMainDbConnection(config: {
   host: string;

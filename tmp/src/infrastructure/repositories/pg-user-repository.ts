@@ -1,6 +1,6 @@
 import { Kysely } from "kysely";
-import { User, UserProps } from "../../domain/entities/user.entity";
-import { UserRepository } from "../../domain/interfaces/repositories/user-repository.interface";
+import { User, UserProps } from "../../src/domain/entities/user.entity";
+import { UserRepository } from "../../src/application/repositories/user-repository.interface";
 import { Database } from "../database/main-db.types";
 
 export class PgUserRepository implements UserRepository {
