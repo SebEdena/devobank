@@ -1,13 +1,12 @@
-import { inject, injectable } from "inversify";
-import type { Database } from "../../../../application/providers/database.interface";
-import { container, TYPES } from "../../../../ioc";
-import { Kysely } from "kysely";
-import { PostgresJSDialect } from "kysely-postgres-js";
-import postgres from "postgres";
+import { inject } from "inversify";
+import { TYPES } from "../../../../ioc";
+import { PostgresDatabase } from "../database";
 import type { DB } from "./models";
 
-export const db = new Kysely<DB>({
-  dialect: new PostgresJSDialect({
-    postgres: postgres(container.get<string>(TYPES.mainDb)),
-  }),
-});
+export class PostgresDatabaseMain extends PostgresDatabase<DB> {
+  constructor(
+    @inject(TYPES.mainDb) dbUrl: string,
+  ) {
+    super(dbUrl);
+  }
+}

@@ -1,12 +1,12 @@
 import type { UserRepository } from "../repositories/user-repository.interface";
-import type { Database } from "./database.interface";
 
 export interface UnitOfWork<DB> {
-  transaction<T>(operation: (db: Database<DB>) => T): Promise<T>;
-
-  get users(): UserRepository;
+  transaction<T>(operation: (db: DB) => T): Promise<T>;
 }
 
-export interface UnitOfWorkRead<DB> {
-  transaction<T>(operation: (db: Database<DB>) => T): Promise<T>;
+export interface UnitOfWorkMain<DB> extends UnitOfWork<DB> {
+  get users(): UserRepository<DB>;
+}
+
+export interface UnitOfWorkRead<DB> extends UnitOfWork<DB> {
 }
