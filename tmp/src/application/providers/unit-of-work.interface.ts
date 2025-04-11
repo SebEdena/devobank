@@ -5,8 +5,7 @@ export interface UnitOfWork<DB> {
 }
 
 export interface UnitOfWorkMain<DB> extends UnitOfWork<DB> {
-  get users(): UserRepository<DB>;
+  get users(): UserRepository;
 }
 
-export interface UnitOfWorkRead<DB> extends UnitOfWork<DB> {
-}
+export interface UnitOfWorkRead<DB> extends UnitOfWork<DB> {}

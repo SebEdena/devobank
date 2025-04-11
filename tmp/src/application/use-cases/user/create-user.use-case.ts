@@ -1,7 +1,7 @@
 import { User, UserProps } from "../../../domain/entities/user.entity";
+import { makeUserCreatedEvent } from "../../../domain/events/user-created.event";
+import { EventEmitter } from "../../providers/messaging.interface";
 import { UserRepository } from "../../repositories/user-repository.interface";
-import { EventEmitter } from "../../providers/event-emitter.interface";
-import { makeUserCreatedEvent, UserCreatedEvent } from "../../../domain/events/user-created.event";
 
 interface CreateUserDTO {
   username: string;
