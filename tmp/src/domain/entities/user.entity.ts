@@ -4,11 +4,11 @@ export class User {
   password: string;
 
   constructor(data: {
-    id: string;
+    id?: string;
     email: string;
     password: string;
   }) {
-    this.id = data.id;
+    this.id = data.id ?? crypto.randomUUID();
     this.email = data.email;
     this.password = data.password;
   }

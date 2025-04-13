@@ -1,5 +1,5 @@
+import type { EventEmitter } from "../../../application/providers/messaging.interface";
 import { config } from "../../../config";
-import { EventEmitter } from "../../src/application/providers/event-emitter.interface";
 import { MQClient } from "./amqp-client";
 
 export class RabbitMQEventEmitter extends MQClient implements EventEmitter {

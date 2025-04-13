@@ -1,17 +1,15 @@
-import type { Kysely } from "kysely";
 import type { UserRepository } from "../../../../../application/repositories/user-repository.interface";
 import { User } from "../../../../../domain/entities/user.entity";
 import type { PostgresDatabaseMain } from "../database";
-import type { DB } from "../models";
 
 export class PgUserRepository implements UserRepository {
   constructor(private readonly db: PostgresDatabaseMain) {}
 
-  private instance(db?: Kysely<DB>) {
-    return db ?? this.db.instance;
+  private instance(db?: PostgresDatabaseMain) {
+    return db?.instance ?? this.db.instance;
   }
 
-  async findById(id: string, db?: Kysely<DB>) {
+  async findById(id: string, db?: PostgresDatabaseMain) {
     const data = await this.instance(db).selectFrom("users").selectAll().where("id", "=", id).executeTakeFirst();
     if (!data) {
       return null;
@@ -19,7 +17,7 @@ export class PgUserRepository implements UserRepository {
     return new User(data);
   }
 
-  async findByEmail(email: string, db?: Kysely<DB>) {
+  async findByEmail(email: string, db?: PostgresDatabaseMain) {
     const data = await this.instance(db).selectFrom("users").selectAll().where("email", "=", email).executeTakeFirst();
     if (!data) {
       return null;
@@ -27,7 +25,7 @@ export class PgUserRepository implements UserRepository {
     return new User(data);
   }
 
-  async create(user: User, db?: Kysely<DB>) {
+  async create(user: User, db?: PostgresDatabaseMain) {
     const data = await this.instance(db)
       .insertInto("users")
       .values({
@@ -40,7 +38,7 @@ export class PgUserRepository implements UserRepository {
     return new User(data);
   }
 
-  async update(user: User, db: Kysely<DB> = this.db.instance) {
+  async update(user: User, db?: PostgresDatabaseMain) {
     const data = await this.instance(db)
       .updateTable("users")
       .set(user)
@@ -50,7 +48,7 @@ export class PgUserRepository implements UserRepository {
     return data ? new User(data) : null;
   }
 
-  async delete(id: string, db: Kysely<DB> = this.db.instance) {
+  async delete(id: string, db?: PostgresDatabaseMain) {
     const data = await this.instance(db)
       .deleteFrom("users")
       .where("id", "=", id)

@@ -1,7 +1,9 @@
-import { User, UserProps } from "../../../domain/entities/user.entity";
-import { makeUserCreatedEvent } from "../../../domain/events/user-created.event";
-import { EventEmitter } from "../../providers/messaging.interface";
-import { UserRepository } from "../../repositories/user-repository.interface";
+import { inject, injectable } from "inversify";
+import type { UnitOfWork, UnitOfWorkMain } from "../../providers/unit-of-work.interface";
+import type { EventEmitter } from "../../providers/messaging.interface";
+import type { PasswordHandler } from "../../providers/password-handler.interface";
+import { User } from "../../../domain/entities/user.entity";
+import { createMessage, Message } from "../../../domain/events";
 
 interface CreateUserDTO {
   username: string;
@@ -9,36 +11,42 @@ interface CreateUserDTO {
   passwordHash: string;
 }
 
+@injectable()
 export class CreateUserUseCase {
   constructor(
-    private readonly userRepository: UserRepository,
+    private readonly uowMain: UnitOfWorkMain,
     private readonly eventEmitter: EventEmitter,
+    private readonly passwordHandler: PasswordHandler,
   ) {}
 
-  async execute(data: CreateUserDTO): Promise<string> {
-    const existingUser = await this.userRepository.findByEmail(data.email);
+  async execute(data: CreateUserDTO): Promise<User> {
+    const existingUser = await this.uowMain.users.findByEmail(data.email);
 
     if (existingUser) {
-      throw new Error("Username already exists");
+      throw new Error("User email already in use");
     }
 
-    const userId = crypto.randomUUID();
+    const passwordHash = await this.passwordHandler.hash(data.passwordHash);
 
-    const userProps: UserProps = {
-      id: userId,
-      username: data.username,
+    const userData = new User({
       email: data.email,
-      passwordHash: data.passwordHash,
-      createdAt: new Date(),
-    };
+      password: passwordHash,
+    });
 
-    const user = new User(userProps);
+    const user = await this.uowMain.transaction(async (db) => {
+      const userCreated = await this.uowMain.users.create(userData, db);
 
-    await this.userRepository.create(user);
+      // Emit event for CQRS
+      await this.eventEmitter.emit(
+        createMessage("user.created", {
+          userId: userCreated.id,
+          email: userCreated.email,
+        }),
+      );
 
-    // Emit event for CQRS
-    await this.eventEmitter.emit(makeUserCreatedEvent(user));
+      return userCreated;
+    });
 
-    return user.id;
+    return user;
   }
 }

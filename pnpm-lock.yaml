@@ -26,10 +26,10 @@ importers:
     dependencies:
       '@devobank/event-bus':
         specifier: workspace:*
-        version: link:../../packages/event-bus
+        version: file:packages/event-bus(@types/node@22.13.5)(elysia@1.2.25(@sinclair/typebox@0.34.13)(typescript@5.7.3))(formidable@3.5.2)(tsx@4.19.3)(typescript@5.7.3)(ws@8.18.1)
       '@devobank/main-db':
         specifier: workspace:*
-        version: link:../../packages/main-db
+        version: file:packages/main-db(@types/node@22.13.5)(tsx@4.19.3)(typescript@5.7.3)
       '@elysiajs/bearer':
         specifier: ^1.2.0
         version: 1.2.0(elysia@1.2.25(@sinclair/typebox@0.34.13)(typescript@5.7.3))
@@ -65,10 +65,10 @@ importers:
     dependencies:
       '@devobank/event-bus':
         specifier: workspace:*
-        version: link:../../packages/event-bus
+        version: file:packages/event-bus(@types/node@22.13.5)(elysia@1.2.25(@sinclair/typebox@0.34.13)(typescript@5.7.3))(formidable@3.5.2)(tsx@4.19.3)(typescript@5.7.3)(ws@8.18.1)
       '@devobank/read-db':
         specifier: workspace:*
-        version: link:../../packages/read-db
+        version: file:packages/read-db(@types/node@22.13.5)(tsx@4.19.3)(typescript@5.7.3)
       '@sinclair/typebox':
         specifier: 0.34.13
         version: 0.34.13
@@ -191,10 +191,10 @@ importers:
     dependencies:
       '@types/node':
         specifier: ^22.0.0
-        version: 22.13.5
+        version: 22.14.1
       amqplib:
-        specifier: ^0.10.5
-        version: 0.10.5
+        specifier: ^0.10.7
+        version: 0.10.7
       bcrypt:
         specifier: ^5.1.1
         version: 5.1.1
@@ -202,17 +202,17 @@ importers:
         specifier: 7.0.0-alpha.5
         version: 7.0.0-alpha.5(reflect-metadata@0.2.2)
       kysely:
-        specifier: ^0.27.5
-        version: 0.27.5
+        specifier: ^0.27.6
+        version: 0.27.6
       kysely-codegen:
         specifier: ^0.17.0
-        version: 0.17.0(kysely@0.27.5)
+        version: 0.17.0(kysely@0.27.6)
       kysely-ctl:
         specifier: ^0.10.1
-        version: 0.10.1(kysely-postgres-js@2.0.0(kysely@0.27.5)(postgres@3.4.5))(kysely@0.27.5)
+        version: 0.10.1(kysely-postgres-js@2.0.0(kysely@0.27.6)(postgres@3.4.5))(kysely@0.27.6)
       kysely-postgres-js:
         specifier: ^2.0.0
-        version: 2.0.0(kysely@0.27.5)(postgres@3.4.5)
+        version: 2.0.0(kysely@0.27.6)(postgres@3.4.5)
       postgres:
         specifier: ^3.4.5
         version: 3.4.5
@@ -224,11 +224,14 @@ importers:
         version: 4.19.3
       typescript:
         specifier: ^5.7.3
-        version: 5.7.3
+        version: 5.8.3
+      zod:
+        specifier: ^3.24.2
+        version: 3.24.2
     devDependencies:
       '@types/amqplib':
-        specifier: ^0.10.6
-        version: 0.10.6
+        specifier: ^0.10.7
+        version: 0.10.7
       '@types/bcrypt':
         specifier: ^5.0.2
         version: 5.0.2
@@ -291,6 +294,27 @@ packages:
     engines: {node: '>=14.21.3'}
     cpu: [x64]
     os: [win32]
+
+  '@devobank/event-bus@file:packages/event-bus':
+    resolution: {directory: packages/event-bus, type: directory}
+    peerDependencies:
+      '@types/node': ^22.0.0
+      tsx: ^4.19.3
+      typescript: ^5.7.3
+
+  '@devobank/main-db@file:packages/main-db':
+    resolution: {directory: packages/main-db, type: directory}
+    peerDependencies:
+      '@types/node': ^22.0.0
+      tsx: ^4.19.3
+      typescript: ^5.7.3
+
+  '@devobank/read-db@file:packages/read-db':
+    resolution: {directory: packages/read-db, type: directory}
+    peerDependencies:
+      '@types/node': ^22.0.0
+      tsx: ^4.19.3
+      typescript: ^5.7.3
 
   '@elysiajs/bearer@1.2.0':
     resolution: {integrity: sha512-orr0XHhc99JgtxQlKhnTPRqRlYrE9MDW+v1IMcs9Uy+bEMbohAkK1zmbi05tO7P2UT9t4Xl6pHF/R0WD71ZpCQ==}
@@ -496,11 +520,17 @@ packages:
   '@types/amqplib@0.10.6':
     resolution: {integrity: sha512-vQLVypBS1JQcfTXhl1Td1EEeLdtb+vuulOb4TrzYiLyP2aYLMAEzB3pNmEA0jBm0xIXu946Y7Xwl19Eidl32SQ==}
 
+  '@types/amqplib@0.10.7':
+    resolution: {integrity: sha512-IVj3avf9AQd2nXCx0PGk/OYq7VmHiyNxWFSb5HhU9ATh+i+gHWvVcljFTcTWQ/dyHJCTrzCixde+r/asL2ErDA==}
+
   '@types/bcrypt@5.0.2':
     resolution: {integrity: sha512-6atioO8Y75fNcbmj0G7UjI9lXN2pQ/IGJ2FWT4a/btd0Lk9lQalHLKhkgKVZ3r+spnmWUKfbMi1GEe9wyHQfNQ==}
 
   '@types/node@22.13.5':
     resolution: {integrity: sha512-+lTU0PxZXn0Dr1NBtC7Y8cR21AJr87dLLU953CWA6pMxxv/UDc7jYAY90upcrie1nRcD6XNG5HOYEDtgW5TxAg==}
+
+  '@types/node@22.14.1':
+    resolution: {integrity: sha512-u0HuPQwe/dHrItgHHpmw3N2fYCR6x4ivMNbPHRkBVP4CvN+kiRrKHWk3i8tXiO/joPwXLMYvF9TTF0eqgHIuOw==}
 
   abbrev@1.1.1:
     resolution: {integrity: sha512-nne9/IiQ/hzIhY6pdDnbBtz7DjPTKrY00P/zvPSm5pOFkl6xuGrGnXn/VtTNNfNtAfZ9/1RtehkszU9qcTii0Q==}
@@ -516,6 +546,10 @@ packages:
 
   amqplib@0.10.5:
     resolution: {integrity: sha512-Dx5zmy0Ur+Q7LPPdhz+jx5IzmJBoHd15tOeAfQ8SuvEtyPJ20hBemhOBA4b1WeORCRa0ENM/kHCzmem1w/zHvQ==}
+    engines: {node: '>=10'}
+
+  amqplib@0.10.7:
+    resolution: {integrity: sha512-7xPSYKSX2kj/bT6iHZ3MlctzxdCW1Ds9xyN0EmuRi2DZxHztwwoG1YkZrgmLyuPNjfxlRiMdWJPQscmoa3Vgdg==}
     engines: {node: '>=10'}
 
   ansi-regex@5.0.1:
@@ -835,6 +869,10 @@ packages:
     resolution: {integrity: sha512-s7hZHcQeSNKpzCkHRm8yA+0JPLjncSWnjb+2TIElwS2JAqYr+Kv3Ess+9KFfJS0C1xcQ1i9NkNHpWwCYpHMWsA==}
     engines: {node: '>=14.0.0'}
 
+  kysely@0.27.6:
+    resolution: {integrity: sha512-FIyV/64EkKhJmjgC0g2hygpBv5RNWVPyNCqSAD7eTCv6eFWNIi4PN1UvdSJGicN/o35bnevgis4Y0UDC0qi8jQ==}
+    engines: {node: '>=14.0.0'}
+
   loglevel@1.9.2:
     resolution: {integrity: sha512-HgMmCqIJSAKqo68l0rS2AanEWfkxaZ5wNiEFb5ggm08lDs9Xl2KxBlX3PTcaD2chBM1gXAYf491/M2Rv8Jwayg==}
     engines: {node: '>= 0.6.0'}
@@ -1074,11 +1112,19 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
+  typescript@5.8.3:
+    resolution: {integrity: sha512-p1diW6TqL9L07nNxvRMM7hMMw4c5XOo/1ibL4aAIGmSAt9slTE1Xgw5KWuof2uTOvCg9BY7ZRi+GaF+7sfgPeQ==}
+    engines: {node: '>=14.17'}
+    hasBin: true
+
   ufo@1.5.4:
     resolution: {integrity: sha512-UsUk3byDzKd04EyoZ7U4DOlxQaD14JUKQl6/P7wiX4FNvUfm3XL246n9W5AmqwW5RSFJ27NAuM0iLscAOYUiGQ==}
 
   undici-types@6.20.0:
     resolution: {integrity: sha512-Ny6QZ2Nju20vw1SRHe3d9jVu6gJ+4e3+MMpqu7pqE5HT6WsTSlce++GQmK5UXS8mzV8DSYHrQH+Xrf2jVcuKNg==}
+
+  undici-types@6.21.0:
+    resolution: {integrity: sha512-iwDZqg0QAGrg9Rav5H4n0M64c3mkR59cJ6wQp+7C4nI0gsmExaedaYLNO44eT4AtBBwjbTiGPMlt2Md0T9H9JQ==}
 
   url-parse@1.5.10:
     resolution: {integrity: sha512-WypcfiRhfeUP9vvF0j6rw0J3hrWrw6iZv3+22h6iRMJ/8z1Tj6XfLP4DsUix5MhMPnXpiHDoKyoZ/bdCkwBCiQ==}
@@ -1112,6 +1158,9 @@ packages:
 
   yallist@4.0.0:
     resolution: {integrity: sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==}
+
+  zod@3.24.2:
+    resolution: {integrity: sha512-lY7CDW43ECgW9u1TcT3IoXHflywfVqDYze4waEz812jR/bZ8FHDsl7pFQoSZTz5N+2NqRXs8GBwnAwo3ZNxqhQ==}
 
 snapshots:
 
@@ -1157,6 +1206,72 @@ snapshots:
 
   '@biomejs/cli-win32-x64@1.9.4':
     optional: true
+
+  '@devobank/event-bus@file:packages/event-bus(@types/node@22.13.5)(elysia@1.2.25(@sinclair/typebox@0.34.13)(typescript@5.7.3))(formidable@3.5.2)(tsx@4.19.3)(typescript@5.7.3)(ws@8.18.1)':
+    dependencies:
+      '@elysiajs/node': 1.2.6(elysia@1.2.25(@sinclair/typebox@0.34.13)(typescript@5.7.3))(formidable@3.5.2)(ws@8.18.1)
+      '@sinclair/typebox': 0.34.13
+      '@types/node': 22.13.5
+      amqplib: 0.10.7
+      tsx: 4.19.3
+      typescript: 5.7.3
+    transitivePeerDependencies:
+      - bufferutil
+      - elysia
+      - formidable
+      - ws
+
+  '@devobank/main-db@file:packages/main-db(@types/node@22.13.5)(tsx@4.19.3)(typescript@5.7.3)':
+    dependencies:
+      '@sinclair/typebox': 0.34.13
+      '@types/node': 22.13.5
+      bcrypt: 5.1.1
+      kysely: 0.27.6
+      kysely-codegen: 0.17.0(kysely@0.27.6)
+      kysely-ctl: 0.10.1(kysely-postgres-js@2.0.0(kysely@0.27.6)(postgres@3.4.5))(kysely@0.27.6)
+      kysely-postgres-js: 2.0.0(kysely@0.27.6)(postgres@3.4.5)
+      postgres: 3.4.5
+      tsx: 4.19.3
+      typescript: 5.7.3
+    transitivePeerDependencies:
+      - '@libsql/kysely-libsql'
+      - '@tediousjs/connection-string'
+      - better-sqlite3
+      - encoding
+      - kysely-bun-sqlite
+      - kysely-bun-worker
+      - magicast
+      - mysql2
+      - pg
+      - supports-color
+      - tarn
+      - tedious
+
+  '@devobank/read-db@file:packages/read-db(@types/node@22.13.5)(tsx@4.19.3)(typescript@5.7.3)':
+    dependencies:
+      '@sinclair/typebox': 0.34.13
+      '@types/node': 22.13.5
+      bcrypt: 5.1.1
+      kysely: 0.27.6
+      kysely-codegen: 0.17.0(kysely@0.27.6)
+      kysely-ctl: 0.10.1(kysely-postgres-js@2.0.0(kysely@0.27.6)(postgres@3.4.5))(kysely@0.27.6)
+      kysely-postgres-js: 2.0.0(kysely@0.27.6)(postgres@3.4.5)
+      postgres: 3.4.5
+      tsx: 4.19.3
+      typescript: 5.7.3
+    transitivePeerDependencies:
+      - '@libsql/kysely-libsql'
+      - '@tediousjs/connection-string'
+      - better-sqlite3
+      - encoding
+      - kysely-bun-sqlite
+      - kysely-bun-worker
+      - magicast
+      - mysql2
+      - pg
+      - supports-color
+      - tarn
+      - tedious
 
   '@elysiajs/bearer@1.2.0(elysia@1.2.25(@sinclair/typebox@0.34.13)(typescript@5.7.3))':
     dependencies:
@@ -1296,6 +1411,10 @@ snapshots:
     dependencies:
       '@types/node': 22.13.5
 
+  '@types/amqplib@0.10.7':
+    dependencies:
+      '@types/node': 22.14.1
+
   '@types/bcrypt@5.0.2':
     dependencies:
       '@types/node': 22.13.5
@@ -1303,6 +1422,10 @@ snapshots:
   '@types/node@22.13.5':
     dependencies:
       undici-types: 6.20.0
+
+  '@types/node@22.14.1':
+    dependencies:
+      undici-types: 6.21.0
 
   abbrev@1.1.1: {}
 
@@ -1321,6 +1444,11 @@ snapshots:
       url-parse: 1.5.10
     transitivePeerDependencies:
       - supports-color
+
+  amqplib@0.10.7:
+    dependencies:
+      buffer-more-ints: 1.0.0
+      url-parse: 1.5.10
 
   ansi-regex@5.0.1: {}
 
@@ -1609,6 +1737,17 @@ snapshots:
       minimist: 1.2.8
       pluralize: 8.0.0
 
+  kysely-codegen@0.17.0(kysely@0.27.6):
+    dependencies:
+      chalk: 4.1.2
+      dotenv: 16.4.7
+      dotenv-expand: 11.0.7
+      git-diff: 2.0.6
+      kysely: 0.27.6
+      micromatch: 4.0.8
+      minimist: 1.2.8
+      pluralize: 8.0.0
+
   kysely-ctl@0.10.1(kysely-postgres-js@2.0.0(kysely@0.27.5)(postgres@3.4.5))(kysely@0.27.5):
     dependencies:
       c12: 2.0.4
@@ -1626,12 +1765,36 @@ snapshots:
     transitivePeerDependencies:
       - magicast
 
+  kysely-ctl@0.10.1(kysely-postgres-js@2.0.0(kysely@0.27.6)(postgres@3.4.5))(kysely@0.27.6):
+    dependencies:
+      c12: 2.0.4
+      citty: 0.1.6
+      consola: 3.4.0
+      kysely: 0.27.6
+      nypm: 0.4.1
+      ofetch: 1.4.1
+      pathe: 1.1.2
+      pkg-types: 1.3.1
+      std-env: 3.8.0
+      tsx: 4.19.3
+    optionalDependencies:
+      kysely-postgres-js: 2.0.0(kysely@0.27.6)(postgres@3.4.5)
+    transitivePeerDependencies:
+      - magicast
+
   kysely-postgres-js@2.0.0(kysely@0.27.5)(postgres@3.4.5):
     dependencies:
       kysely: 0.27.5
       postgres: 3.4.5
 
+  kysely-postgres-js@2.0.0(kysely@0.27.6)(postgres@3.4.5):
+    dependencies:
+      kysely: 0.27.6
+      postgres: 3.4.5
+
   kysely@0.27.5: {}
+
+  kysely@0.27.6: {}
 
   loglevel@1.9.2: {}
 
@@ -1854,9 +2017,13 @@ snapshots:
 
   typescript@5.7.3: {}
 
+  typescript@5.8.3: {}
+
   ufo@1.5.4: {}
 
   undici-types@6.20.0: {}
+
+  undici-types@6.21.0: {}
 
   url-parse@1.5.10:
     dependencies:
@@ -1881,3 +2048,5 @@ snapshots:
   ws@8.18.1: {}
 
   yallist@4.0.0: {}
+
+  zod@3.24.2: {}

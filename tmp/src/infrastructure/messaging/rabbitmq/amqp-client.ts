@@ -1,7 +1,7 @@
 import amqp from "amqplib";
 
 export abstract class MQClient {
-  protected _connection?: amqp.Connection;
+  protected _connection?: amqp.ChannelModel;
   protected _channel?: amqp.Channel;
 
   constructor(

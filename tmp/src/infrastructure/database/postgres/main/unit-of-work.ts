@@ -1,20 +1,15 @@
-import type { Kysely } from "kysely";
 import type { Database } from "../../../../application/providers/database.interface";
-import { PostgresUnitOfWork } from "../unit-of-work";
-import type { DB } from "./models";
-import type { PgUserRepository } from "./repositories/pg-user-repository";
+import { PgUserRepository } from "./repositories/pg-user-repository";
+import { PostgresDatabaseMain } from "./database";
+import type { UnitOfWorkMain } from "../../../../application/providers/unit-of-work.interface";
 
-export class PostgresUnitOfWorkMain extends PostgresUnitOfWork<DB> {
-  constructor(
-    _db: Database<Kysely<DB>>,
-    private readonly _userRepository: PgUserRepository,
-  ) {
-    super(_db);
-  }
+export class PostgresUnitOfWorkMain implements UnitOfWorkMain {
+  private readonly db = new PostgresDatabaseMain();
+  private readonly _userRepository = new PgUserRepository(this.db);
 
-  transaction<T>(operation: (db: Kysely<DB>) => T): Promise<T> {
-    return super._db.instance.transaction().execute(async (trx) => {
-      return await operation(trx);
+  transaction<T>(operation: (db: Database) => T): Promise<T> {
+    return this.db.instance.transaction().execute(async (trx) => {
+      return await operation(new PostgresDatabaseMain(trx));
     });
   }
 

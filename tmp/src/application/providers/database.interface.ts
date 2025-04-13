@@ -1,3 +1,3 @@
-export interface Database<T> {
-  get instance(): T;
+export interface Database {
+  get instance(): unknown;
 }
