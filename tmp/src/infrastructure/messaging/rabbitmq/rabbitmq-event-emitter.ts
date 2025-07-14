@@ -1,16 +1,17 @@
-import type { EventEmitter } from "../../../application/providers/messaging.interface";
-import { config } from "../../../config";
+import type { EventEmitter } from "@domain/providers/messaging.interface";
+import { config } from "@shared/config";
 import { MQClient } from "./amqp-client";
 
 export class RabbitMQEventEmitter extends MQClient implements EventEmitter {
-  constructor(queueName: string) {
-    super(config.MQ_URL, config.MQ_EXCHANGE, config.MQ_QUEUE);
-    this.initialize(queueName);
-  }
+    constructor(queueName: string) {
+        super(config.MQ_URL, config.MQ_EXCHANGE, config.MQ_QUEUE);
+        this.initialize(queueName);
+    }
 
-  private async initialize(queueName: string) {
-    await this.connect();
-  }
+    private async initialize(queueName: string) {
+        await this.connect();
+    }
 
-  async emit(event: Record<string, unknown>): Promise<void> {}
+    async emit(event: Record<string, unknown>): Promise<void> {}
 }
+
