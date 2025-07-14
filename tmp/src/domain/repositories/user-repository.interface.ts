@@ -1,5 +1,5 @@
 import type { User } from "@domain/entities/user.entity";
-import type { Database } from "@domain/providers/database.interface";
+import type { Database } from "@domain/adapters/database.interface";
 
 export interface UserRepository {
     findById(id: string, db?: Database): Promise<User | null>;

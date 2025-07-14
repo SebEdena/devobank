@@ -1,4 +1,4 @@
-import type { EventEmitter } from "@domain/providers/messaging.interface";
+import type { EventEmitter } from "@domain/adapters/messaging.interface";
 import { config } from "@shared/config";
 import { MQClient } from "./amqp-client";
 

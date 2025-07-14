@@ -1,7 +1,7 @@
 import { Kysely } from "kysely";
 import { PostgresJSDialect } from "kysely-postgres-js";
 import postgres from "postgres";
-import type { Database } from "@domain/providers/database.interface";
+import type { Database } from "@domain/adapters/database.interface";
 
 export abstract class PostgresDatabase<DB> implements Database {
     private readonly _db: Kysely<DB>;

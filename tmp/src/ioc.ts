@@ -1,5 +1,5 @@
 import { Container } from "inversify";
-import type { PasswordHandler } from "@domain/providers/password-handler.interface";
+import type { PasswordHandler } from "@domain/adapters/password-handler.interface";
 import { config } from "@shared/config";
 import { BcryptPasswordHandler } from "@infrastructure/password/bcrypt-password-handler";
 

@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import { injectable } from "inversify";
-import type { PasswordHandler } from "@domain/providers/password-handler.interface";
+import type { PasswordHandler } from "@domain/adapters/password-handler.interface";
 
 @injectable()
 export class BcryptPasswordHandler implements PasswordHandler {
