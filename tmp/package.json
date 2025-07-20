@@ -2,10 +2,15 @@
   "name": "@devobank/core",
   "module": "",
   "type": "module",
+  "scripts": {
+    "test": "vitest --coverage"
+  },
   "peerDependencies": {
     "@types/node": "^22.0.0",
+    "@vitest/coverage-v8": "3.2.4",
     "tsx": "^4.19.3",
-    "typescript": "^5.7.3"
+    "typescript": "^5.7.3",
+    "vitest": "^3.2.4"
   },
   "dependencies": {
     "@types/jsonwebtoken": "^9.0.10",
