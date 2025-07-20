@@ -1,14 +1,14 @@
-import type { JwtHandler, JwtPayload } from "@domain/adapters/jwt.interface";
+import type { JwtHandler, JwtPayload } from "@domain/ports/jwt.interface";
 import { sign, verify } from "jsonwebtoken";
 
-export class JsonWebToken implements JwtHandler {
-  private secret = "blablabla"; // This should be securely managed, e.g., using environment variables
+export class JsonWebTokenJwtHandler implements JwtHandler {
+  constructor(private readonly secret: string) {}
 
   sign(data: { userId: string }): Promise<string> {
     return new Promise((resolve, reject) => {
-      sign(data, this.secret, { expiresIn: "1h" }, (err, token) => {
+      sign(data, this.secret, { expiresIn: "1h", subject: data.userId }, (err, token) => {
         if (err || !token) {
-          reject(`Error signing JWT: ${err?.message ?? "Unknown error"}`);
+          reject(`Error signing JWT: ${err?.message}`);
         } else {
           resolve(token);
         }
@@ -17,11 +17,10 @@ export class JsonWebToken implements JwtHandler {
   }
 
   verify(token: string): Promise<JwtPayload> {
-    // Implementation for verifying a JWT
     return new Promise((resolve, reject) => {
       verify(token, this.secret, {}, (err, decoded) => {
         if (err || !decoded) {
-          reject(`Error verifying JWT: ${err?.message ?? "Unknown error"}`);
+          reject(`Error verifying JWT: ${err?.message}`);
         } else {
           resolve(decoded as JwtPayload);
         }

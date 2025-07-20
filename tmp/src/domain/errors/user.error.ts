@@ -34,3 +34,14 @@ export function UserPasswordMismatchError(): UserPasswordMismatchError {
   error.name = "user.passwordMismatch";
   return error;
 }
+
+export interface LoginError extends Error {
+  name: "user.loginError";
+  message: string;
+}
+
+export function LoginError(message: string): LoginError {
+  const error = new Error(message) as LoginError;
+  error.name = "user.loginError";
+  return error;
+}

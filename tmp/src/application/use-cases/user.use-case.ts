@@ -4,7 +4,13 @@ import type { EventEmitter } from "@domain/ports/messaging.interface";
 import type { PasswordHandler } from "@domain/ports/password-handler.interface";
 import { User } from "@domain/entities/user.entity";
 import { createMessage, Message } from "@domain/events";
-import { UserEmailAlreadyInUseError, UserNotFoundError, UserPasswordMismatchError } from "@domain/errors/user.error";
+import {
+  LoginError,
+  UserEmailAlreadyInUseError,
+  UserNotFoundError,
+  UserPasswordMismatchError,
+} from "@domain/errors/user.error";
+import type { JwtHandler } from "@domain/ports/jwt.interface";
 
 export interface CreateUserDTO {
   username: string;
@@ -18,6 +24,7 @@ export class UserUseCase {
     private readonly uowMain: UnitOfWorkMain,
     private readonly eventEmitter: EventEmitter,
     private readonly passwordHandler: PasswordHandler,
+    private readonly jwtHandler: JwtHandler,
   ) {}
 
   async createUser(data: {
@@ -55,7 +62,7 @@ export class UserUseCase {
     return user;
   }
 
-  async loginUser(email: string, password: string): Promise<User> {
+  async loginUser(email: string, password: string): Promise<string> {
     const user = await this.uowMain.users.findByEmail(email);
 
     if (!user) {
@@ -66,6 +73,29 @@ export class UserUseCase {
 
     if (!passwordMatch) {
       throw UserPasswordMismatchError();
+    }
+
+    try {
+      const token = await this.jwtHandler.sign({ userId: user.id });
+      return token;
+    } catch (err) {
+      throw LoginError(err instanceof Error ? err.message : "Unknown login error");
+    }
+  }
+
+  async getUserFromToken(token: string): Promise<User> {
+    let userId: string;
+    try {
+      const payload = await this.jwtHandler.verify(token);
+      userId = payload.userId;
+    } catch (err) {
+      throw LoginError(err instanceof Error ? err.message : "Invalid token");
+    }
+
+    const user = await this.uowMain.users.findById(userId);
+
+    if (!user) {
+      throw UserNotFoundError(userId);
     }
 
     return user;
