@@ -1,7 +1,7 @@
 import { inject, injectable } from "inversify";
-import type { UnitOfWork, UnitOfWorkMain } from "@domain/adapters/unit-of-work.interface";
-import type { EventEmitter } from "@domain/adapters/messaging.interface";
-import type { PasswordHandler } from "@domain/adapters/password-handler.interface";
+import type { UnitOfWork, UnitOfWorkMain } from "@domain/ports/unit-of-work.interface";
+import type { EventEmitter } from "@domain/ports/messaging.interface";
+import type { PasswordHandler } from "@domain/ports/password-handler.interface";
 import { User } from "@domain/entities/user.entity";
 import { createMessage, Message } from "@domain/events";
 import { UserEmailAlreadyInUseError, UserNotFoundError, UserPasswordMismatchError } from "@domain/errors/user.error";

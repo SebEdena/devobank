@@ -14,5 +14,5 @@ export interface JwtPayload extends UserPayload {
 
 export interface JwtHandler {
   sign(payload: UserPayload): Promise<string>;
-  verify(token: string, secret: string): Promise<JwtPayload>;
+  verify(token: string): Promise<JwtPayload>;
 }
