@@ -1,4 +1,4 @@
-import type { PasswordHandler } from "@domain/ports/password-handler.interface";
+import type { PasswordHandler } from "@shared/ports/password-handler.interface";
 import bcrypt from "bcrypt";
 import { injectable } from "inversify";
 

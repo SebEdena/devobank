@@ -1,7 +1,6 @@
-import type { Database } from "@domain/ports/database.interface";
-import { PgUserRepository } from "./repositories/pg-user-repository";
+import type { Database, UnitOfWorkMain } from "@shared/ports/unit-of-work.interface";
 import { PostgresDatabaseMain } from "./database";
-import type { UnitOfWorkMain } from "@domain/ports/unit-of-work.interface";
+import { PgUserRepository } from "./repositories/pg-user-repository";
 
 export class PostgresUnitOfWorkMain implements UnitOfWorkMain {
   private readonly db = new PostgresDatabaseMain();

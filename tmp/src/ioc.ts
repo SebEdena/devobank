@@ -1,7 +1,7 @@
-import { Container } from "inversify";
-import type { PasswordHandler } from "@domain/ports/password-handler.interface";
+import { BcryptPasswordHandler } from "@shared/adapters/password/bcrypt-password-handler";
 import { config } from "@shared/config";
-import { BcryptPasswordHandler } from "@infrastructure/password/bcrypt-password-handler";
+import type { PasswordHandler } from "@shared/ports/password-handler.interface";
+import { Container } from "inversify";
 
 const TYPES = {
   mainDb: Symbol.for("mainDb"),

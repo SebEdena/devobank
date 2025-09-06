@@ -3,9 +3,9 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@application/*": ["src/application/*"],
-      "@domain/*": ["src/domain/*"],
-      "@infrastructure/*": ["src/infrastructure/*"],
+      "@application/*": ["src/core/*"],
+      "@domain/*": ["src/core/domain/*"],
+      "@infrastructure/*": ["src/adapters/*"],
       "@shared/*": ["src/*"]
     }
   }
