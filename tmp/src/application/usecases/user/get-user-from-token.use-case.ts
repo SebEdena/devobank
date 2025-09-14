@@ -1,10 +1,7 @@
-import type { User } from "@shared/core/domain/entities/user.entity";
-import {
-  LoginError,
-  UserNotFoundError,
-} from "@shared/core/domain/errors/user.error";
-import type { JwtHandler } from "@shared/ports/jwt.interface";
-import type { UnitOfWorkMain } from "@shared/ports/unit-of-work.interface";
+import type { User } from "@domain/entities/user.entity";
+import { LoginError, UserNotFoundError } from "@domain/errors/user.error";
+import type { JwtHandler } from "@ports/jwt.interface";
+import type { UnitOfWorkMain } from "@ports/unit-of-work.interface";
 import { injectable } from "inversify";
 
 export interface GetUserFromTokenDTO {

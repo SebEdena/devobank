@@ -1,8 +1,10 @@
 {
   "name": "@devobank/core",
-  "module": "",
-  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
     "test": "vitest --coverage"
   },
   "peerDependencies": {
@@ -29,5 +31,28 @@
   "devDependencies": {
     "@types/amqplib": "^0.10.7",
     "@types/bcrypt": "^5.0.2"
+  },
+  "files": ["dist"],
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "./adapters/*": {
+      "import": "./dist/adapters/*.js",
+      "types": "./dist/adapters/*.d.ts"
+    },
+    "./application/*": {
+      "import": "./dist/application/*.js",
+      "types": "./dist/application/*.d.ts"
+    },
+    "./domain/*": {
+      "import": "./dist/domain/*.js",
+      "types": "./dist/domain/*.d.ts"
+    },
+    "./ports/*": {
+      "import": "./dist/ports/*.js",
+      "types": "./dist/ports/*.d.ts"
+    }
   }
 }

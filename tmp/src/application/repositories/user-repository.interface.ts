@@ -1,5 +1,5 @@
-import type { User } from "@shared/core/domain/entities/user.entity";
-import type { Database } from "@shared/core/domain/ports/database.interface";
+import type { User } from "@domain/entities/user.entity";
+import type { Database } from "@ports/unit-of-work.interface";
 
 export interface UserRepository {
   findById(id: string, db?: Database): Promise<User | null>;

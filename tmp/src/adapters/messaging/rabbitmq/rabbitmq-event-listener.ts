@@ -1,5 +1,5 @@
-import { config } from "@shared/config";
-import { Message } from "@shared/core/domain/events";
+import { config } from "@/config";
+import { Message } from "@domain/events";
 import { MQClient } from "./amqp-client";
 
 export class RabbitMqEventListener extends MQClient {

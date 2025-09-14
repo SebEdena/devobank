@@ -1,11 +1,7 @@
-import {
-  LoginError,
-  UserNotFoundError,
-  UserPasswordMismatchError,
-} from "@shared/core/domain/errors/user.error";
-import type { JwtHandler } from "@shared/ports/jwt.interface";
-import type { PasswordHandler } from "@shared/ports/password-handler.interface";
-import type { UnitOfWorkMain } from "@shared/ports/unit-of-work.interface";
+import { LoginError, UserNotFoundError, UserPasswordMismatchError } from "@domain/errors/user.error";
+import type { JwtHandler } from "@ports/jwt.interface";
+import type { PasswordHandler } from "@ports/password-handler.interface";
+import type { UnitOfWorkMain } from "@ports/unit-of-work.interface";
 import { injectable } from "inversify";
 
 export interface LoginUserDTO {

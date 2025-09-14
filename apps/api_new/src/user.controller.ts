@@ -1,4 +1,4 @@
-import { SignDTO } from "@devobank/core";
+import { SignDTO } from "@devobank/core/domain/dtos/user/sign.dto";
 import { zValidator } from "@hono/zod-validator";
 import { Hono } from "hono";
 

@@ -1,4 +1,4 @@
-import type { JwtPayload } from "@shared/ports/jwt.interface";
+import type { JwtPayload } from "@ports/jwt.interface";
 import jsonwebtoken, { sign, verify } from "jsonwebtoken";
 import { describe, expect, test, vi } from "vitest";
 import { JsonWebTokenJwtHandler } from "./jsonwebtoken-jwt-handler";

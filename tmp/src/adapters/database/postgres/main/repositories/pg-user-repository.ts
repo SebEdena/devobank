@@ -1,5 +1,5 @@
-import { User } from "@shared/core/domain/entities/user.entity";
-import type { UserRepository } from "@shared/ports/repositories/user-repository.interface";
+import type { UserRepository } from "@application/repositories/user-repository.interface";
+import { User } from "@domain/entities/user.entity";
 import type { PostgresDatabaseMain } from "../database";
 
 export class PgUserRepository implements UserRepository {

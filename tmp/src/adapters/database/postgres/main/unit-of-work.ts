@@ -1,4 +1,4 @@
-import type { Database, UnitOfWorkMain } from "@shared/ports/unit-of-work.interface";
+import type { Database, UnitOfWorkMain } from "@ports/unit-of-work.interface";
 import { PostgresDatabaseMain } from "./database";
 import { PgUserRepository } from "./repositories/pg-user-repository";
 

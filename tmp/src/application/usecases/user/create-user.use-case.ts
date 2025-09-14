@@ -1,9 +1,9 @@
-import { User } from "@shared/core/domain/entities/user.entity";
-import { UserEmailAlreadyInUseError } from "@shared/core/domain/errors/user.error";
-import { createMessage } from "@shared/core/domain/events";
-import type { EventEmitter } from "@shared/ports/messaging.interface";
-import type { PasswordHandler } from "@shared/ports/password-handler.interface";
-import type { UnitOfWorkMain } from "@shared/ports/unit-of-work.interface";
+import { User } from "@domain/entities/user.entity";
+import { UserEmailAlreadyInUseError } from "@domain/errors/user.error";
+import { createMessage } from "@domain/events";
+import type { EventEmitter } from "@ports/messaging.interface";
+import type { PasswordHandler } from "@ports/password-handler.interface";
+import type { UnitOfWorkMain } from "@ports/unit-of-work.interface";
 import { injectable } from "inversify";
 
 export interface CreateUserDTO {

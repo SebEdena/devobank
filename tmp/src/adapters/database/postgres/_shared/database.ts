@@ -1,4 +1,4 @@
-import type { Database } from "@shared/ports/unit-of-work.interface";
+import type { Database } from "@ports/unit-of-work.interface";
 import { Kysely } from "kysely";
 import { PostgresJSDialect } from "kysely-postgres-js";
 import postgres from "postgres";

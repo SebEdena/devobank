@@ -1,4 +1,4 @@
-import type { UserRepository } from "@shared/ports/repositories/user-repository.interface";
+import type { UserRepository } from "@application/repositories/user-repository.interface";
 
 export interface Database {
   get instance(): unknown;

@@ -2,11 +2,14 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
+    "outDir": "./dist",
+    "declarationDir": "./dist",
     "paths": {
-      "@application/*": ["src/core/*"],
-      "@domain/*": ["src/core/domain/*"],
-      "@infrastructure/*": ["src/adapters/*"],
-      "@shared/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@adapters/*": ["src/adapters/*"],
+      "@domain/*": ["src/domain/*"],
+      "@application/*": ["src/application/*"],
+      "@ports/*": ["src/ports/*"]
     }
   }
 }

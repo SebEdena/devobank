@@ -1,4 +1,4 @@
-import type { JwtHandler, JwtPayload } from "@shared/ports/jwt.interface";
+import type { JwtHandler, JwtPayload } from "@ports/jwt.interface";
 import { sign, verify } from "jsonwebtoken";
 
 export class JsonWebTokenJwtHandler implements JwtHandler {
