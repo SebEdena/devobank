@@ -1,16 +1,7 @@
 import { Module } from '@nestjs/common';
-import { InMemoryUserRepository } from './adapters/in-memory-user-repository';
-import { I_USER_REPOSITORY } from './ports/user-repository.interface';
+import { UsersPersistenceModule } from './users-persistence.module';
 
 @Module({
-  imports: [],
-  controllers: [],
-  providers: [
-    {
-      provide: I_USER_REPOSITORY,
-      useValue: InMemoryUserRepository,
-    },
-  ],
-  exports: [I_USER_REPOSITORY],
+  imports: [UsersPersistenceModule],
 })
-export class UserModule {}
+export class UsersModule {}

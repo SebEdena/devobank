@@ -1,8 +1,8 @@
-import { IStringHasher } from '../ports/string-hasher.interface';
+import type { IStringHasher } from '../ports/string-hasher.interface';
 
-export class BcryptStringHasher implements IStringHasher {
+export class NoOpStringHasher implements IStringHasher {
   hash(value: string): Promise<string> {
-    return Promise.resolve('hashed:' + value);
+    return Promise.resolve(value);
   }
 
   async compare(value: string, hashed: string): Promise<boolean> {
