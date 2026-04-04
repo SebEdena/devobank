@@ -1,5 +1,12 @@
 import type { Request } from 'src/shared/request';
 import type { AuthCredentials } from '../dtos/credentials';
+import { AuthorizationHeaderMissingException } from '../exceptions/authorization-header-missing.exception';
+import { EmailMissingException } from '../exceptions/email-missing.exception';
+import { InvalidAuthorizationHeaderFormatException } from '../exceptions/invalid-authorization-header-format.exception';
+import { InvalidBase64TokenException } from '../exceptions/invalid-base64-token.exception';
+import { InvalidBasicCredentialsFormatException } from '../exceptions/invalid-basic-credentials-format.exception';
+import { MalformedAuthorizationHeaderException } from '../exceptions/malformed-authorization-header.exception';
+import { PasswordMissingException } from '../exceptions/password-missing.exception';
 import type { ICredentialsMapper } from '../ports/credentials-mapper.interface';
 
 export class BasicCredentialsMapper implements ICredentialsMapper {
@@ -7,15 +14,15 @@ export class BasicCredentialsMapper implements ICredentialsMapper {
     const authHeader = request.headers?.authorization;
 
     if (!authHeader) {
-      throw new Error('Authorization header missing');
+      throw new AuthorizationHeaderMissingException();
     }
 
     if (!authHeader.startsWith('Basic ')) {
-      throw new Error('Invalid authorization header format');
+      throw new InvalidAuthorizationHeaderFormatException();
     }
 
     if (authHeader.split(' ').length !== 2) {
-      throw new Error('Malformed authorization header');
+      throw new MalformedAuthorizationHeaderException();
     }
 
     const token = authHeader.split(' ')[1];
@@ -24,23 +31,21 @@ export class BasicCredentialsMapper implements ICredentialsMapper {
     try {
       decoded = Buffer.from(token, 'base64').toString('utf-8');
     } catch {
-      throw new Error('Invalid base64 token');
+      throw new InvalidBase64TokenException();
     }
 
     if (decoded.split(':').length !== 2) {
-      throw new Error(
-        'Invalid credentials format, should be email:password in base64',
-      );
+      throw new InvalidBasicCredentialsFormatException();
     }
 
     const [email, password] = decoded.split(':');
 
     if (!email) {
-      throw new Error('Email is missing');
+      throw new EmailMissingException();
     }
 
     if (!password) {
-      throw new Error('Password is missing');
+      throw new PasswordMissingException();
     }
 
     return {

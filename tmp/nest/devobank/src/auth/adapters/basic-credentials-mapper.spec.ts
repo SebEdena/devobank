@@ -1,6 +1,11 @@
 import type { Request } from 'src/shared/request';
 import type { User } from 'src/users/entities/user.entity';
 import { userSeeds } from 'src/users/tests/user-seeds';
+import { AuthorizationHeaderMissingException } from '../exceptions/authorization-header-missing.exception';
+import { EmailMissingException } from '../exceptions/email-missing.exception';
+import { InvalidAuthorizationHeaderFormatException } from '../exceptions/invalid-authorization-header-format.exception';
+import { InvalidBasicCredentialsFormatException } from '../exceptions/invalid-basic-credentials-format.exception';
+import { PasswordMissingException } from '../exceptions/password-missing.exception';
 import { BasicCredentialsMapper } from './basic-credentials-mapper';
 
 describe('AuthenticationService', () => {
@@ -40,9 +45,9 @@ describe('AuthenticationService', () => {
         headers: {},
       } as Request;
 
-      expect(() => {
-        credentialsMapper.mapRequestToCredentials(request);
-      }).toThrow();
+      expect(() => credentialsMapper.mapRequestToCredentials(request)).toThrow(
+        AuthorizationHeaderMissingException,
+      );
     });
   });
 
@@ -54,9 +59,9 @@ describe('AuthenticationService', () => {
         },
       } as Request;
 
-      expect(() => {
-        credentialsMapper.mapRequestToCredentials(request);
-      }).toThrow();
+      expect(() => credentialsMapper.mapRequestToCredentials(request)).toThrow(
+        InvalidAuthorizationHeaderFormatException,
+      );
     });
 
     it('should throw an error if the token is not properly base64 encoded', () => {
@@ -66,9 +71,9 @@ describe('AuthenticationService', () => {
         },
       } as Request;
 
-      expect(() => {
-        credentialsMapper.mapRequestToCredentials(request);
-      }).toThrow();
+      expect(() => credentialsMapper.mapRequestToCredentials(request)).toThrow(
+        InvalidBasicCredentialsFormatException,
+      );
     });
 
     it('should throw an error it the token does not contain a colon separator', () => {
@@ -80,9 +85,9 @@ describe('AuthenticationService', () => {
         },
       } as Request;
 
-      expect(() => {
-        credentialsMapper.mapRequestToCredentials(request);
-      }).toThrow();
+      expect(() => credentialsMapper.mapRequestToCredentials(request)).toThrow(
+        InvalidBasicCredentialsFormatException,
+      );
     });
 
     it('should throw an error if the token contains multiple colons', () => {
@@ -96,9 +101,9 @@ describe('AuthenticationService', () => {
         },
       } as Request;
 
-      expect(() => {
-        credentialsMapper.mapRequestToCredentials(request);
-      }).toThrow();
+      expect(() => credentialsMapper.mapRequestToCredentials(request)).toThrow(
+        InvalidBasicCredentialsFormatException,
+      );
     });
 
     it('should throw an error if the email is empty', () => {
@@ -110,9 +115,9 @@ describe('AuthenticationService', () => {
         },
       } as Request;
 
-      expect(() => {
-        credentialsMapper.mapRequestToCredentials(request);
-      }).toThrow();
+      expect(() => credentialsMapper.mapRequestToCredentials(request)).toThrow(
+        EmailMissingException,
+      );
     });
 
     it('should throw an error if the password is empty', () => {
@@ -124,9 +129,9 @@ describe('AuthenticationService', () => {
         },
       } as Request;
 
-      expect(() => {
-        credentialsMapper.mapRequestToCredentials(request);
-      }).toThrow();
+      expect(() => credentialsMapper.mapRequestToCredentials(request)).toThrow(
+        PasswordMissingException,
+      );
     });
   });
 });

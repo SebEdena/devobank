@@ -2,7 +2,10 @@ import type { IStringHasher } from 'src/core/ports/string-hasher.interface';
 import type { Request } from 'src/shared/request';
 import type { User } from 'src/users/entities/user.entity';
 import type { IUserRepository } from 'src/users/ports/user-repository.interface';
+import { UnsupportedAuthenticationTypeException } from '../exceptions/unsupported-authentication-type.exception';
+import { UserNotFoundException } from '../exceptions/user-not-found.exception';
 import type { ICredentialsMapper } from '../ports/credentials-mapper.interface';
+import { InvalidPasswordException } from '../exceptions/invalid-password.exception';
 
 export class AuthenticationService {
   constructor(
@@ -18,7 +21,7 @@ export class AuthenticationService {
       case 'email-password':
         return this.authenticateWithEmailPassword(credentials);
       default:
-        throw new Error('Unsupported authentication type');
+        throw new UnsupportedAuthenticationTypeException();
     }
   }
 
@@ -30,7 +33,7 @@ export class AuthenticationService {
     const user = await this.userRepository.findByEmail(credentials.email);
 
     if (!user) {
-      throw new Error('User not found');
+      throw new UserNotFoundException();
     }
 
     const isPasswordValid = await this.stringHasher.compare(
@@ -39,7 +42,7 @@ export class AuthenticationService {
     );
 
     if (!isPasswordValid) {
-      throw new Error('Invalid password');
+      throw new InvalidPasswordException();
     }
 
     return user;
