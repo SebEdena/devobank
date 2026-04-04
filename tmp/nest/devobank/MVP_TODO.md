@@ -3,9 +3,8 @@
 ## 1. Auth and Account Setup
 
 - [ ] Define the Identity and Ledger bounded contexts and keep their models separate.
-- [ ] Implement signup use case with email and password validation.
-- [ ] Hash passwords before persisting users.
-- [ ] Implement signin use case and return an authenticated session or token.
+- [x] Implement signup use case with email and password validation.
+- [x] Hash passwords before persisting users.
 - [ ] Create a bank account automatically when a new customer signs up.
 - [ ] Add a query to see my account details and current balance.
 - [ ] Add unit tests for signup, signin, and account creation flows.
