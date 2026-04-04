@@ -6,4 +6,11 @@ type UserProps = {
   password: string;
 };
 
-export class User extends Entity<UserProps> {}
+export class User extends Entity<UserProps> {
+  protected cloneWith(props: Partial<UserProps>): this {
+    return new User({
+      ...this.props,
+      ...props,
+    }) as this;
+  }
+}
