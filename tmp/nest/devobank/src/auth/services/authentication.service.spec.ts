@@ -4,7 +4,7 @@ import { userSeeds } from '../../users/tests/user-seeds';
 import { BasicCredentialsMapper } from '../adapters/basic-credentials-mapper';
 import { AuthenticationService } from './authentication.service';
 import type { Request } from 'src/shared/request';
-import { ICredentialsMapper } from '../ports/credentials-mapper.interface';
+import type { ICredentialsMapper } from '../ports/credentials-mapper.interface';
 
 describe('AuthenticationService', () => {
   let credentialsMapper: BasicCredentialsMapper;
@@ -45,10 +45,32 @@ describe('AuthenticationService', () => {
 
         expect(user).toEqual(userSeeds.john);
       });
+
+      it('should compare plain password with stored password', async () => {
+        const compareSpy = jest.spyOn(stringHasher, 'compare');
+        const token = formatToken(
+          userSeeds.john.props.email,
+          userSeeds.john.props.password,
+        );
+
+        const request = {
+          headers: {
+            authorization: `Basic ${token}`,
+          },
+        } as Request;
+
+        await service.authenticate(request);
+
+        expect(compareSpy).toHaveBeenCalledWith(
+          userSeeds.john.props.password,
+          userSeeds.john.props.password,
+        );
+      });
     });
 
     describe('Case: Invalid Credentials', () => {
       it('should throw an error if the user is not found', async () => {
+        const compareSpy = jest.spyOn(stringHasher, 'compare');
         const token = formatToken('nonexistent@example.com', 'password');
 
         const request = {
@@ -60,6 +82,7 @@ describe('AuthenticationService', () => {
         await expect(() => service.authenticate(request)).rejects.toThrow(
           'User not found',
         );
+        expect(compareSpy).not.toHaveBeenCalled();
       });
 
       it('should throw an error if the password is incorrect', async () => {
@@ -75,6 +98,18 @@ describe('AuthenticationService', () => {
           'Invalid password',
         );
       });
+    });
+  });
+
+  describe('Case: Invalid Request Format', () => {
+    it('should propagate mapper validation errors', async () => {
+      const request = {
+        headers: {},
+      } as Request;
+
+      await expect(() => service.authenticate(request)).rejects.toThrow(
+        'Authorization header missing',
+      );
     });
   });
 

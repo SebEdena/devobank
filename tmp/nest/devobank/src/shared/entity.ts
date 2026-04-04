@@ -1,15 +1,21 @@
 export abstract class Entity<T> {
-  private _props: T;
+  private readonly _props: T;
 
   constructor(data: T) {
-    this._props = { ...data };
+    this._props = Object.freeze(data) as T;
   }
 
-  get props(): T {
+  get props(): Readonly<T> {
     return this._props;
   }
 
-  update(data: Partial<T>): void {
-    this._props = { ...this._props, ...data } as T;
+  clone(): this {
+    return this.cloneWith({});
   }
+
+  with(props: Partial<T>): this {
+    return this.cloneWith(props);
+  }
+
+  protected abstract cloneWith(props: Partial<T>): this;
 }

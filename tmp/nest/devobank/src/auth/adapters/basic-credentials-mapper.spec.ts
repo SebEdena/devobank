@@ -45,4 +45,88 @@ describe('AuthenticationService', () => {
       }).toThrow();
     });
   });
+
+  describe('Case: The token is malformed', () => {
+    it('should throw an error if the token lacks Basic prefix', () => {
+      const request = {
+        headers: {
+          authorization: 'Bearer some-token',
+        },
+      } as Request;
+
+      expect(() => {
+        credentialsMapper.mapRequestToCredentials(request);
+      }).toThrow();
+    });
+
+    it('should throw an error if the token is not properly base64 encoded', () => {
+      const request = {
+        headers: {
+          authorization: 'Basic not-a-valid-base64',
+        },
+      } as Request;
+
+      expect(() => {
+        credentialsMapper.mapRequestToCredentials(request);
+      }).toThrow();
+    });
+
+    it('should throw an error it the token does not contain a colon separator', () => {
+      const malformedToken = Buffer.from('emailandpassword').toString('base64');
+
+      const request = {
+        headers: {
+          authorization: `Basic ${malformedToken}`,
+        },
+      } as Request;
+
+      expect(() => {
+        credentialsMapper.mapRequestToCredentials(request);
+      }).toThrow();
+    });
+
+    it('should throw an error if the token contains multiple colons', () => {
+      const malformedToken = Buffer.from('email:password:extra').toString(
+        'base64',
+      );
+
+      const request = {
+        headers: {
+          authorization: `Basic ${malformedToken}`,
+        },
+      } as Request;
+
+      expect(() => {
+        credentialsMapper.mapRequestToCredentials(request);
+      }).toThrow();
+    });
+
+    it('should throw an error if the email is empty', () => {
+      const malformedToken = Buffer.from(':password').toString('base64');
+
+      const request = {
+        headers: {
+          authorization: `Basic ${malformedToken}`,
+        },
+      } as Request;
+
+      expect(() => {
+        credentialsMapper.mapRequestToCredentials(request);
+      }).toThrow();
+    });
+
+    it('should throw an error if the password is empty', () => {
+      const malformedToken = Buffer.from('email:').toString('base64');
+
+      const request = {
+        headers: {
+          authorization: `Basic ${malformedToken}`,
+        },
+      } as Request;
+
+      expect(() => {
+        credentialsMapper.mapRequestToCredentials(request);
+      }).toThrow();
+    });
+  });
 });
