@@ -2,7 +2,7 @@ import type { User } from 'src/users/entities/user.entity';
 import type { IUserRepository } from 'src/users/ports/user-repository.interface';
 
 export class InMemoryUserRepository implements IUserRepository {
-  constructor(private readonly database: User[] = []) {}
+  constructor(public database: User[] = []) {}
 
   findByEmail(email: string) {
     const user = this.database.find((user) => user.props.email === email);

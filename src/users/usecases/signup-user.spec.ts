@@ -1,0 +1,86 @@
+import { NoOpStringHasher } from 'src/core/adapters/noop-string-hasher';
+import { InMemoryUserRepository } from '../adapters/in-memory-user-repository';
+import { SignupUser } from './signup-user';
+import { FixedIdGenerator } from 'src/core/adapters/fixed-id-generator';
+import { User } from '../entities/user.entity';
+import { userSeeds } from '../tests/user-seeds';
+import { PasswordsNotMatchingException } from '../exceptions/passwords-not-matching.exception';
+import { UserAlreadyExistsException } from '../exceptions/user-already-exists.exception';
+
+describe('Feature: signin up a user', () => {
+  let userRepository: InMemoryUserRepository;
+  let stringHasher: NoOpStringHasher;
+  let idGenerator: FixedIdGenerator;
+  let signupUser: SignupUser;
+
+  function makeNewUserRequest(user: User) {
+    return {
+      name: user.props.name,
+      email: user.props.email,
+      password: user.props.password,
+      confirmPassword: user.props.password,
+    };
+  }
+
+  beforeEach(() => {
+    userRepository = new InMemoryUserRepository();
+    stringHasher = new NoOpStringHasher();
+    idGenerator = new FixedIdGenerator();
+    signupUser = new SignupUser(userRepository, stringHasher, idGenerator);
+  });
+
+  describe('Scenario: user signs up successfully', () => {
+    it('should create a new user in the repository', async () => {
+      const user = userSeeds.john.clone();
+      const userToCreate = makeNewUserRequest(user);
+      const expectedHashedPassword = await stringHasher.hash(
+        user.props.password,
+      );
+
+      await signupUser.execute(userToCreate);
+
+      expect(userRepository.database).toHaveLength(1);
+      expect(userRepository.database[0].props).toEqual({
+        id: 'id-1',
+        name: user.props.name,
+        email: user.props.email,
+        password: expectedHashedPassword,
+      });
+    });
+  });
+
+  describe('Scenario: user fails to sign up', () => {
+    it('should throw an error when passwords do not match', async () => {
+      const user = userSeeds.john.clone();
+      const userToCreate = makeNewUserRequest(user);
+      userToCreate.confirmPassword = 'different-password';
+
+      await expect(signupUser.execute(userToCreate)).rejects.toThrow(
+        PasswordsNotMatchingException,
+      );
+
+      expect(userRepository.database).toHaveLength(0);
+    });
+
+    it('should throw an error when email is already in use', async () => {
+      const user = userSeeds.john.clone();
+      const userToCreate = makeNewUserRequest(user);
+
+      // Pre-populate the repository with a user having the same email
+      await userRepository.create(
+        new User({
+          id: 'existing-user-id',
+          name: 'Existing User',
+          email: user.props.email,
+          password: await stringHasher.hash('some-password'),
+        }),
+      );
+
+      await expect(signupUser.execute(userToCreate)).rejects.toThrow(
+        UserAlreadyExistsException,
+      );
+
+      expect(userRepository.database).toHaveLength(1);
+    });
+  });
+});
