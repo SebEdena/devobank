@@ -14,6 +14,7 @@ import {
   I_ID_GENERATOR,
   IIdGenerator,
 } from 'src/core/ports/id-generator.interface';
+import { UsersController } from './controllers/users.controller';
 
 @Module({
   imports: [CoreModule, UsersPersistenceModule],
@@ -28,5 +29,6 @@ import {
       ) => new SignupUser(userRepository, stringHasher, idGenerator),
     },
   ],
+  controllers: [UsersController],
 })
 export class UsersModule {}

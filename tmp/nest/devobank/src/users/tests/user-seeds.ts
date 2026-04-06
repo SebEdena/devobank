@@ -5,5 +5,6 @@ export const userSeeds: Record<string, User> = {
     id: 'user-1',
     email: 'john.doe@example.com',
     password: 'password123',
+    name: 'John Doe',
   }),
 };
