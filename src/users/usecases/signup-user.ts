@@ -13,7 +13,9 @@ type Request = {
   confirmPassword: string;
 };
 
-type Response = void;
+type Response = {
+  id: string;
+};
 
 export class SignupUser implements Executable<Request, Response> {
   constructor(
@@ -22,7 +24,7 @@ export class SignupUser implements Executable<Request, Response> {
     private readonly idGenerator: IIdGenerator,
   ) {}
 
-  async execute(request: Request): Promise<void> {
+  async execute(request: Request): Promise<Response> {
     const { name, email, password, confirmPassword } = request;
 
     if (password !== confirmPassword) {
@@ -45,5 +47,7 @@ export class SignupUser implements Executable<Request, Response> {
     });
 
     await this.userRepository.create(user);
+
+    return { id: user.props.id };
   }
 }

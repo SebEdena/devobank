@@ -1,12 +1,22 @@
 export default {
   moduleFileExtensions: ['js', 'json', 'ts'],
-  rootDir: 'src',
+  rootDir: '.',
+  preset: 'ts-jest/presets/default-esm',
   testEnvironment: 'node',
-  testRegex: '.e2e-spec.ts$',
+  testRegex: '\\.(int|e2e)\\.spec\\.ts$',
   transform: {
-    '^.+\\.(t|j)s$': 'ts-jest',
+    '^.+\\.(t|j)s$': [
+      'ts-jest',
+      { useESM: true, tsconfig: 'tsconfig.int.json' },
+    ],
   },
   moduleNameMapper: {
-    '^src/(.*)$': '<rootDir>/$1',
+    '^src/(.*)$': '<rootDir>/src/$1',
+    '^tests/(.*)$': '<rootDir>/tests/$1',
   },
+  maxWorkers: 1,
+  forceExit: true,
+  detectOpenHandles: true,
+  globalSetup: './tests/shared/setup/global-setup.ts',
+  globalTeardown: './tests/shared/setup/global-teardown.ts',
 };

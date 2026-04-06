@@ -1,0 +1,9 @@
+services:
+  main-db-test:
+    image: postgres:17-alpine
+    ports:
+      - "5442:5432"
+    environment:
+      POSTGRES_DB: devobank-main
+      POSTGRES_USER: devobank
+      POSTGRES_PASSWORD: devobank
