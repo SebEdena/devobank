@@ -1,16 +1,26 @@
-import type { CanActivate, ExecutionContext } from '@nestjs/common';
-import type { Observable } from 'rxjs';
-import type { Request } from 'src/shared/request';
-import type { AuthenticationService } from '../services/authentication.service';
+import {
+  Inject,
+  Injectable,
+  type CanActivate,
+  type ExecutionContext,
+} from '@nestjs/common';
+import type { ApiRequest, AuthenticatedApiRequest } from 'src/shared/request';
+import { AuthenticationService } from '../services/authentication.service';
 
+@Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private readonly authenticationService: AuthenticationService) {}
+  constructor(
+    @Inject(AuthenticationService)
+    private readonly authenticationService: AuthenticationService,
+  ) {}
 
-  canActivate(
-    context: ExecutionContext,
-  ): boolean | Promise<boolean> | Observable<boolean> {
-    const req: Request = context.switchToHttp().getRequest();
+  async canActivate(context: ExecutionContext) {
+    const req: ApiRequest = context.switchToHttp().getRequest();
 
-    return this.authenticationService.authenticate(req).then(() => true);
+    const user = await this.authenticationService.authenticate(req);
+
+    (req as AuthenticatedApiRequest).user = user;
+
+    return true;
   }
 }

@@ -1,4 +1,4 @@
-import type { Request } from 'src/shared/request';
+import type { ApiRequest } from 'src/shared/request';
 import type { User } from 'src/users/entities/user.entity';
 import { userSeeds } from 'src/users/tests/user-seeds';
 import { AuthorizationHeaderMissingException } from '../exceptions/authorization-header-missing.exception';
@@ -27,7 +27,7 @@ describe('AuthenticationService', () => {
         headers: {
           authorization: `Basic ${token}`,
         },
-      } as Request;
+      } as ApiRequest;
 
       const credentials = credentialsMapper.mapRequestToCredentials(request);
 
@@ -43,7 +43,7 @@ describe('AuthenticationService', () => {
     it('should throw an error', () => {
       const request = {
         headers: {},
-      } as Request;
+      } as ApiRequest;
 
       expect(() => credentialsMapper.mapRequestToCredentials(request)).toThrow(
         AuthorizationHeaderMissingException,
@@ -57,7 +57,7 @@ describe('AuthenticationService', () => {
         headers: {
           authorization: 'Bearer some-token',
         },
-      } as Request;
+      } as ApiRequest;
 
       expect(() => credentialsMapper.mapRequestToCredentials(request)).toThrow(
         InvalidAuthorizationHeaderFormatException,
@@ -69,7 +69,7 @@ describe('AuthenticationService', () => {
         headers: {
           authorization: 'Basic not-a-valid-base64',
         },
-      } as Request;
+      } as ApiRequest;
 
       expect(() => credentialsMapper.mapRequestToCredentials(request)).toThrow(
         InvalidBasicCredentialsFormatException,
@@ -83,7 +83,7 @@ describe('AuthenticationService', () => {
         headers: {
           authorization: `Basic ${malformedToken}`,
         },
-      } as Request;
+      } as ApiRequest;
 
       expect(() => credentialsMapper.mapRequestToCredentials(request)).toThrow(
         InvalidBasicCredentialsFormatException,
@@ -99,7 +99,7 @@ describe('AuthenticationService', () => {
         headers: {
           authorization: `Basic ${malformedToken}`,
         },
-      } as Request;
+      } as ApiRequest;
 
       expect(() => credentialsMapper.mapRequestToCredentials(request)).toThrow(
         InvalidBasicCredentialsFormatException,
@@ -113,7 +113,7 @@ describe('AuthenticationService', () => {
         headers: {
           authorization: `Basic ${malformedToken}`,
         },
-      } as Request;
+      } as ApiRequest;
 
       expect(() => credentialsMapper.mapRequestToCredentials(request)).toThrow(
         EmailMissingException,
@@ -127,7 +127,7 @@ describe('AuthenticationService', () => {
         headers: {
           authorization: `Basic ${malformedToken}`,
         },
-      } as Request;
+      } as ApiRequest;
 
       expect(() => credentialsMapper.mapRequestToCredentials(request)).toThrow(
         PasswordMissingException,

@@ -7,15 +7,17 @@ import {
 } from '@nestjs/common';
 import type { FastifyReply, FastifyRequest } from 'fastify';
 import { DomainException } from './exception';
+import { ZodValidationException } from 'nestjs-zod';
+import { ZodError } from 'zod';
 
-type ErrorResponse = {
+export class ErrorResponse {
   code: string;
   message: string;
   status: number;
   details?: unknown;
   timestamp: string;
   path: string;
-};
+}
 
 @Catch()
 export class GlobalExceptionFilter implements ExceptionFilter {
@@ -23,6 +25,25 @@ export class GlobalExceptionFilter implements ExceptionFilter {
     const ctx = host.switchToHttp();
     const request = ctx.getRequest<FastifyRequest>();
     const reply = ctx.getResponse<FastifyReply>();
+
+    if (exception instanceof ZodValidationException) {
+      const zodError = exception.getZodError() as ZodError;
+
+      const response: ErrorResponse = {
+        code: 'validation-error',
+        message: 'Validation failed',
+        status: HttpStatus.BAD_REQUEST,
+        details: zodError.issues.map((issue) => ({
+          code: issue.code,
+          message: issue.message,
+        })),
+        timestamp: new Date().toISOString(),
+        path: request.url,
+      };
+
+      reply.status(HttpStatus.BAD_REQUEST).send(response);
+      return;
+    }
 
     if (exception instanceof DomainException) {
       const response: ErrorResponse = {

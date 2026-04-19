@@ -15,9 +15,11 @@ import {
   IIdGenerator,
 } from 'src/core/ports/id-generator.interface';
 import { UsersController } from './controllers/users.controller';
+import { AuthModule } from 'src/auth/auth.module';
+import { GetProfile } from './usecases/get-profile';
 
 @Module({
-  imports: [CoreModule, UsersPersistenceModule],
+  imports: [CoreModule, AuthModule, UsersPersistenceModule],
   providers: [
     {
       provide: SignupUser,
@@ -28,6 +30,7 @@ import { UsersController } from './controllers/users.controller';
         idGenerator: IIdGenerator,
       ) => new SignupUser(userRepository, stringHasher, idGenerator),
     },
+    GetProfile,
   ],
   controllers: [UsersController],
 })

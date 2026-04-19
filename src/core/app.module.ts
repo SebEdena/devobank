@@ -5,10 +5,24 @@ import { AppService } from './app.service';
 import { CoreModule } from './core.module';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import mikroOrmConfig from 'src/mikro-orm.config';
+import { APP_PIPE } from '@nestjs/core';
+import { ZodValidationPipe } from 'nestjs-zod';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
-  imports: [CoreModule, MikroOrmModule.forRoot(mikroOrmConfig), UsersModule],
+  imports: [
+    CoreModule,
+    MikroOrmModule.forRoot(mikroOrmConfig),
+    AuthModule,
+    UsersModule,
+  ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [
+    {
+      provide: APP_PIPE,
+      useClass: ZodValidationPipe,
+    },
+    AppService,
+  ],
 })
 export class AppModule {}

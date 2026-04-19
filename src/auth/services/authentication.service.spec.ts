@@ -3,7 +3,7 @@ import { InMemoryUserRepository } from 'src/users/adapters/in-memory-user-reposi
 import { userSeeds } from '../../users/tests/user-seeds';
 import { BasicCredentialsMapper } from '../adapters/basic-credentials-mapper';
 import { AuthenticationService } from './authentication.service';
-import type { Request } from 'src/shared/request';
+import type { ApiRequest } from 'src/shared/request';
 import type { ICredentialsMapper } from '../ports/credentials-mapper.interface';
 import { UnsupportedAuthenticationTypeException } from '../exceptions/unsupported-authentication-type.exception';
 
@@ -40,7 +40,7 @@ describe('AuthenticationService', () => {
           headers: {
             authorization: `Basic ${token}`,
           },
-        } as Request;
+        } as ApiRequest;
 
         const user = await service.authenticate(request);
 
@@ -58,7 +58,7 @@ describe('AuthenticationService', () => {
           headers: {
             authorization: `Basic ${token}`,
           },
-        } as Request;
+        } as ApiRequest;
 
         await service.authenticate(request);
 
@@ -78,7 +78,7 @@ describe('AuthenticationService', () => {
           headers: {
             authorization: `Basic ${token}`,
           },
-        } as Request;
+        } as ApiRequest;
 
         await expect(() => service.authenticate(request)).rejects.toThrow(
           'User not found',
@@ -93,7 +93,7 @@ describe('AuthenticationService', () => {
           headers: {
             authorization: `Basic ${token}`,
           },
-        } as Request;
+        } as ApiRequest;
 
         await expect(() => service.authenticate(request)).rejects.toThrow(
           'Invalid password',
@@ -106,7 +106,7 @@ describe('AuthenticationService', () => {
     it('should propagate mapper validation errors', async () => {
       const request = {
         headers: {},
-      } as Request;
+      } as ApiRequest;
 
       await expect(() => service.authenticate(request)).rejects.toThrow(
         'Authorization header missing',
@@ -140,7 +140,7 @@ describe('AuthenticationService', () => {
         headers: {
           authorization: 'UnsupportedType somevalue',
         },
-      } as Request;
+      } as ApiRequest;
 
       await expect(() => service.authenticate(request)).rejects.toThrow(
         UnsupportedAuthenticationTypeException,
