@@ -1,3 +1,8 @@
 import { FastifyRequest } from 'fastify';
+import { User } from 'src/users/entities/user.entity';
 
-export type Request = FastifyRequest['raw'];
+export type ApiRequest = FastifyRequest['raw'];
+
+export type AuthenticatedApiRequest = ApiRequest & {
+  user: User;
+};

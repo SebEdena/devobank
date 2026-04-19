@@ -1,5 +1,5 @@
 import type { IStringHasher } from 'src/core/ports/string-hasher.interface';
-import type { Request } from 'src/shared/request';
+import type { ApiRequest } from 'src/shared/request';
 import type { User } from 'src/users/entities/user.entity';
 import type { IUserRepository } from 'src/users/ports/user-repository.interface';
 import { UnsupportedAuthenticationTypeException } from '../exceptions/unsupported-authentication-type.exception';
@@ -14,7 +14,7 @@ export class AuthenticationService {
     private readonly userRepository: IUserRepository,
   ) {}
 
-  async authenticate(request: Request): Promise<User> {
+  async authenticate(request: ApiRequest): Promise<User> {
     const credentials = this.credentialsMapper.mapRequestToCredentials(request);
 
     switch (credentials.type) {

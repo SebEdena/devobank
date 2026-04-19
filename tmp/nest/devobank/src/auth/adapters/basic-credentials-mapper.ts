@@ -1,4 +1,4 @@
-import type { Request } from 'src/shared/request';
+import type { ApiRequest } from 'src/shared/request';
 import type { AuthCredentials } from '../dtos/credentials';
 import { AuthorizationHeaderMissingException } from '../exceptions/authorization-header-missing.exception';
 import { EmailMissingException } from '../exceptions/email-missing.exception';
@@ -10,7 +10,7 @@ import { PasswordMissingException } from '../exceptions/password-missing.excepti
 import type { ICredentialsMapper } from '../ports/credentials-mapper.interface';
 
 export class BasicCredentialsMapper implements ICredentialsMapper {
-  mapRequestToCredentials(request: Request): AuthCredentials {
+  mapRequestToCredentials(request: ApiRequest): AuthCredentials {
     const authHeader = request.headers?.authorization;
 
     if (!authHeader) {
