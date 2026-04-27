@@ -1,4 +1,4 @@
-import { User } from 'src/users/entities/user.entity';
+import { User } from 'src/users/domain/entities/user.entity';
 import { IUserRepository } from 'src/users/ports/user-repository.interface';
 import { PgUser, PgUserSchema } from './entities/user.pg-entity';
 import { EntityManager } from '@mikro-orm/postgresql';

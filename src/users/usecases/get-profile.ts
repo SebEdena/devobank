@@ -1,5 +1,5 @@
 import { Executable } from 'src/shared/executable';
-import { User } from '../entities/user.entity';
+import { User } from '../domain/entities/user.entity';
 
 type Request = {
   user: User;
@@ -12,8 +12,6 @@ type Response = {
 };
 
 export class GetProfile implements Executable<Request, Response> {
-  constructor() {}
-
   async execute(request: Request): Promise<Response> {
     const { user } = request;
     const { id, name, email } = user.props;

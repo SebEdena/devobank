@@ -1,11 +1,11 @@
 import type { ApiRequest } from 'src/shared/request';
-import type { User } from 'src/users/entities/user.entity';
+import type { User } from 'src/users/domain/entities/user.entity';
 import { userSeeds } from 'src/users/tests/user-seeds';
-import { AuthorizationHeaderMissingException } from '../exceptions/authorization-header-missing.exception';
-import { EmailMissingException } from '../exceptions/email-missing.exception';
-import { InvalidAuthorizationHeaderFormatException } from '../exceptions/invalid-authorization-header-format.exception';
-import { InvalidBasicCredentialsFormatException } from '../exceptions/invalid-basic-credentials-format.exception';
-import { PasswordMissingException } from '../exceptions/password-missing.exception';
+import { AuthorizationHeaderMissingException } from '../domain/exceptions/authorization-header-missing.exception';
+import { EmailMissingException } from '../domain/exceptions/email-missing.exception';
+import { InvalidAuthorizationHeaderFormatException } from '../domain/exceptions/invalid-authorization-header-format.exception';
+import { InvalidBasicCredentialsFormatException } from '../domain/exceptions/invalid-basic-credentials-format.exception';
+import { PasswordMissingException } from '../domain/exceptions/password-missing.exception';
 import { BasicCredentialsMapper } from './basic-credentials-mapper';
 
 describe('AuthenticationService', () => {
