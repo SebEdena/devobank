@@ -1,12 +1,12 @@
 import type { ApiRequest } from 'src/shared/request';
 import type { AuthCredentials } from '../dtos/credentials';
-import { AuthorizationHeaderMissingException } from '../exceptions/authorization-header-missing.exception';
-import { EmailMissingException } from '../exceptions/email-missing.exception';
-import { InvalidAuthorizationHeaderFormatException } from '../exceptions/invalid-authorization-header-format.exception';
-import { InvalidBase64TokenException } from '../exceptions/invalid-base64-token.exception';
-import { InvalidBasicCredentialsFormatException } from '../exceptions/invalid-basic-credentials-format.exception';
-import { MalformedAuthorizationHeaderException } from '../exceptions/malformed-authorization-header.exception';
-import { PasswordMissingException } from '../exceptions/password-missing.exception';
+import { AuthorizationHeaderMissingException } from '../domain/exceptions/authorization-header-missing.exception';
+import { EmailMissingException } from '../domain/exceptions/email-missing.exception';
+import { InvalidAuthorizationHeaderFormatException } from '../domain/exceptions/invalid-authorization-header-format.exception';
+import { InvalidBase64TokenException } from '../domain/exceptions/invalid-base64-token.exception';
+import { InvalidBasicCredentialsFormatException } from '../domain/exceptions/invalid-basic-credentials-format.exception';
+import { MalformedAuthorizationHeaderException } from '../domain/exceptions/malformed-authorization-header.exception';
+import { PasswordMissingException } from '../domain/exceptions/password-missing.exception';
 import type { ICredentialsMapper } from '../ports/credentials-mapper.interface';
 
 export class BasicCredentialsMapper implements ICredentialsMapper {

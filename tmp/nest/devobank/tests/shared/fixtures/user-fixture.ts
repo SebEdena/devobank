@@ -1,4 +1,4 @@
-import { User } from 'src/users/entities/user.entity';
+import { User } from 'src/users/domain/entities/user.entity';
 import { TestApp } from '../utils/test-app';
 import {
   I_USER_REPOSITORY,

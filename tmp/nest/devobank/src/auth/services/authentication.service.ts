@@ -1,11 +1,11 @@
 import type { IStringHasher } from 'src/core/ports/string-hasher.interface';
 import type { ApiRequest } from 'src/shared/request';
-import type { User } from 'src/users/entities/user.entity';
+import type { User } from 'src/users/domain/entities/user.entity';
 import type { IUserRepository } from 'src/users/ports/user-repository.interface';
-import { UnsupportedAuthenticationTypeException } from '../exceptions/unsupported-authentication-type.exception';
-import { UserNotFoundException } from '../exceptions/user-not-found.exception';
+import { UnsupportedAuthenticationTypeException } from '../domain/exceptions/unsupported-authentication-type.exception';
+import { UserNotFoundException } from '../domain/exceptions/user-not-found.exception';
 import type { ICredentialsMapper } from '../ports/credentials-mapper.interface';
-import { InvalidPasswordException } from '../exceptions/invalid-password.exception';
+import { InvalidPasswordException } from '../domain/exceptions/invalid-password.exception';
 
 export class AuthenticationService {
   constructor(

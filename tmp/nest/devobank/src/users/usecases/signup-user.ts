@@ -1,9 +1,9 @@
 import { Executable } from 'src/shared/executable';
-import { User } from '../entities/user.entity';
+import { User } from '../domain/entities/user.entity';
 import type { IUserRepository } from '../ports/user-repository.interface';
 import type { IStringHasher } from 'src/core/ports/string-hasher.interface';
-import { PasswordsNotMatchingException } from '../exceptions/passwords-not-matching.exception';
-import { UserAlreadyExistsException } from '../exceptions/user-already-exists.exception';
+import { PasswordsNotMatchingException } from '../domain/exceptions/passwords-not-matching.exception';
+import { UserAlreadyExistsException } from '../domain/exceptions/user-already-exists.exception';
 import { IIdGenerator } from 'src/core/ports/id-generator.interface';
 
 type Request = {

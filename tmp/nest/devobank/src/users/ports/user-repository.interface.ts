@@ -1,4 +1,4 @@
-import type { User } from 'src/users/entities/user.entity';
+import type { User } from 'src/users/domain/entities/user.entity';
 
 export const I_USER_REPOSITORY = 'IUserRepository';
 

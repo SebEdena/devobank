@@ -5,7 +5,7 @@ import { BasicCredentialsMapper } from '../adapters/basic-credentials-mapper';
 import { AuthenticationService } from './authentication.service';
 import type { ApiRequest } from 'src/shared/request';
 import type { ICredentialsMapper } from '../ports/credentials-mapper.interface';
-import { UnsupportedAuthenticationTypeException } from '../exceptions/unsupported-authentication-type.exception';
+import { UnsupportedAuthenticationTypeException } from '../domain/exceptions/unsupported-authentication-type.exception';
 
 describe('AuthenticationService', () => {
   let credentialsMapper: BasicCredentialsMapper;
