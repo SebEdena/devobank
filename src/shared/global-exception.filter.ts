@@ -99,6 +99,11 @@ export class GlobalExceptionFilter implements ExceptionFilter {
       path: request.url,
     };
 
+    request.log.error(
+      { err: exception },
+      `Unhandled exception on ${request.method} ${request.url}`,
+    );
+
     reply.status(HttpStatus.INTERNAL_SERVER_ERROR).send(response);
   }
 }

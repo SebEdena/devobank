@@ -5,6 +5,8 @@ import type { IStringHasher } from 'src/core/ports/string-hasher.interface';
 import { PasswordsNotMatchingException } from '../domain/exceptions/passwords-not-matching.exception';
 import { UserAlreadyExistsException } from '../domain/exceptions/user-already-exists.exception';
 import { IIdGenerator } from 'src/core/ports/id-generator.interface';
+import { EventService } from 'src/core/services/event.service';
+import { USER_CREATED, UserCreated } from '../domain/events';
 
 type Request = {
   name: string;
@@ -22,6 +24,7 @@ export class SignupUser implements Executable<Request, Response> {
     private readonly userRepository: IUserRepository,
     private readonly stringHasher: IStringHasher,
     private readonly idGenerator: IIdGenerator,
+    private readonly eventService: EventService,
   ) {}
 
   async execute(request: Request): Promise<Response> {
@@ -47,6 +50,12 @@ export class SignupUser implements Executable<Request, Response> {
     });
 
     await this.userRepository.create(user);
+
+    await this.eventService.createEvent<UserCreated>(USER_CREATED, {
+      id: user.props.id,
+      email: user.props.email,
+      name: user.props.name,
+    });
 
     return { id: user.props.id };
   }

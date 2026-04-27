@@ -23,7 +23,7 @@ describe('Feature: user signup', () => {
     it('should create the user', async () => {
       const usersRepository = app.get<IUserRepository>(I_USER_REPOSITORY);
 
-      const userToCreate = userSeeds.john.clone();
+      const userToCreate = userSeeds.get('john');
 
       const response = await request(app.getHttpServer())
         .post('/users/signup')
@@ -52,15 +52,16 @@ describe('Feature: user signup', () => {
 
   describe('Scenario: a user already exists with the same email', () => {
     it('should reject', async () => {
-      await new UserFixture(userSeeds.john).load(app);
+      const user = userSeeds.get('john');
+      await new UserFixture(user).load(app);
 
       const response = await request(app.getHttpServer())
         .post('/users/signup')
         .send({
-          email: userSeeds.john.props.email,
-          password: userSeeds.john.props.password,
-          confirmPassword: userSeeds.john.props.password,
-          name: userSeeds.john.props.name,
+          email: user.props.email,
+          password: user.props.password,
+          confirmPassword: user.props.password,
+          name: user.props.name,
         });
 
       expect(response.status).toBe(409);
