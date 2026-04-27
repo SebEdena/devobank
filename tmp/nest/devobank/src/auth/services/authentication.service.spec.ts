@@ -17,10 +17,13 @@ describe('AuthenticationService', () => {
     return Buffer.from(`${email}:${password}`).toString('base64');
   }
 
+  const john = userSeeds.get('john');
+
   beforeEach(() => {
     credentialsMapper = new BasicCredentialsMapper();
     stringHasher = new NoOpStringHasher();
-    userRepository = new InMemoryUserRepository([userSeeds.john]);
+    userRepository = new InMemoryUserRepository([john]);
+
     service = new AuthenticationService(
       credentialsMapper,
       stringHasher,
@@ -31,10 +34,7 @@ describe('AuthenticationService', () => {
   describe('Scenario: Email & Password Credentials', () => {
     describe('Case: Valid Credentials', () => {
       it('should authenticate successfully and return the user', async () => {
-        const token = formatToken(
-          userSeeds.john.props.email,
-          userSeeds.john.props.password,
-        );
+        const token = formatToken(john.props.email, john.props.password);
 
         const request = {
           headers: {
@@ -44,15 +44,12 @@ describe('AuthenticationService', () => {
 
         const user = await service.authenticate(request);
 
-        expect(user).toEqual(userSeeds.john);
+        expect(user.props).toEqual(john.props);
       });
 
       it('should compare plain password with stored password', async () => {
         const compareSpy = jest.spyOn(stringHasher, 'compare');
-        const token = formatToken(
-          userSeeds.john.props.email,
-          userSeeds.john.props.password,
-        );
+        const token = formatToken(john.props.email, john.props.password);
 
         const request = {
           headers: {
@@ -63,8 +60,8 @@ describe('AuthenticationService', () => {
         await service.authenticate(request);
 
         expect(compareSpy).toHaveBeenCalledWith(
-          userSeeds.john.props.password,
-          userSeeds.john.props.password,
+          john.props.password,
+          john.props.password,
         );
       });
     });
@@ -87,7 +84,7 @@ describe('AuthenticationService', () => {
       });
 
       it('should throw an error if the password is incorrect', async () => {
-        const token = formatToken(userSeeds.john.props.email, 'wrongpassword');
+        const token = formatToken(john.props.email, 'wrongpassword');
 
         const request = {
           headers: {

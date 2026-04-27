@@ -5,6 +5,114 @@
   ],
   "tables": [
     {
+      "name": "event",
+      "schema": "public",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "varchar(255)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": true,
+          "nullable": false,
+          "unique": false,
+          "length": 255,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": []
+        },
+        "type": {
+          "name": "type",
+          "type": "varchar(128)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 128,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": []
+        },
+        "occurred_at": {
+          "name": "occurred_at",
+          "type": "timestamptz(6)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": 6,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": []
+        },
+        "status": {
+          "name": "status",
+          "type": "text",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": [
+            "pending",
+            "processed",
+            "failed"
+          ]
+        },
+        "payload": {
+          "name": "payload",
+          "type": "jsonb",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": false,
+          "unique": false,
+          "length": null,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": []
+        }
+      },
+      "indexes": [
+        {
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "event_pkey",
+          "unique": true,
+          "primary": true
+        }
+      ],
+      "checks": [
+        {
+          "name": "event_status_check",
+          "columnName": "status",
+          "definition": "check (\"status\" in ('pending', 'processed', 'failed'))",
+          "expression": "\"status\" in ('pending', 'processed', 'failed')"
+        }
+      ],
+      "foreignKeys": {},
+      "nativeEnums": {},
+      "comment": null
+    },
+    {
       "name": "user",
       "schema": "public",
       "columns": {

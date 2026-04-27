@@ -16,7 +16,7 @@ describe('AuthenticationService', () => {
   });
 
   describe('Case: The token is present in the request', () => {
-    const user: User = userSeeds.john;
+    const user: User = userSeeds.get('john');
 
     const token: string = Buffer.from(
       `${user.props.email}:${user.props.password}`,

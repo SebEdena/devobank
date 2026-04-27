@@ -17,18 +17,26 @@ import {
 import { UsersController } from './controllers/users.controller';
 import { AuthModule } from 'src/auth/auth.module';
 import { GetProfile } from './usecases/get-profile';
+import { EventService } from 'src/core/services/event.service';
 
 @Module({
   imports: [CoreModule, AuthModule, UsersPersistenceModule],
   providers: [
     {
       provide: SignupUser,
-      inject: [I_USER_REPOSITORY, I_STRING_HASHER, I_ID_GENERATOR],
+      inject: [
+        I_USER_REPOSITORY,
+        I_STRING_HASHER,
+        I_ID_GENERATOR,
+        EventService,
+      ],
       useFactory: (
         userRepository: IUserRepository,
         stringHasher: IStringHasher,
         idGenerator: IIdGenerator,
-      ) => new SignupUser(userRepository, stringHasher, idGenerator),
+        eventService: EventService,
+      ) =>
+        new SignupUser(userRepository, stringHasher, idGenerator, eventService),
     },
     GetProfile,
   ],
