@@ -1,5 +1,4 @@
-import { Event, EventStatus } from '../domain/entities/event.entity';
-import { EventNotFoundException } from '../domain/exceptions/event-not-found.exception';
+import { Event } from '../domain/entities/event.entity';
 import { IEventRepository } from '../ports/event-repository.interface';
 
 export class InMemoryEventRepository implements IEventRepository {
@@ -10,24 +9,44 @@ export class InMemoryEventRepository implements IEventRepository {
     return Promise.resolve();
   }
 
-  findUnprocessed(): Promise<Event[]> {
-    return Promise.resolve(
-      this.database.filter(
-        (event) => event.props.status !== EventStatus.PROCESSED,
-      ),
-    );
+  findUnprocessedBatch(limit: number): Promise<Event[]> {
+    const claimedEvents = this.database
+      .filter(
+        (event) =>
+          event.props.processedAt === null && event.props.claimedAt === null,
+      )
+      .slice(0, limit);
+
+    const now = new Date();
+    const batch: Event[] = [];
+
+    for (const event of claimedEvents) {
+      const index = this.database.findIndex(
+        (e) => e.props.id === event.props.id,
+      );
+      if (index !== -1) {
+        this.database[index] = this.database[index].with({ claimedAt: now });
+        batch.push(this.database[index]);
+      }
+    }
+
+    return Promise.resolve(batch);
   }
 
-  update(event: Partial<Event> & { props: { id: string } }): Promise<void> {
-    const eventIndex = this.database.findIndex(
-      (e) => e.props.id === event.props.id,
-    );
-    if (eventIndex !== -1) {
-      this.database[eventIndex] = this.database[eventIndex].with({
-        ...event.props,
+  markProcessed(eventId: string): Promise<void> {
+    const index = this.database.findIndex((e) => e.props.id === eventId);
+    if (index !== -1) {
+      this.database[index] = this.database[index].with({
+        processedAt: new Date(),
       });
-    } else {
-      throw new EventNotFoundException();
+    }
+    return Promise.resolve();
+  }
+
+  markUnclaimed(eventId: string): Promise<void> {
+    const index = this.database.findIndex((e) => e.props.id === eventId);
+    if (index !== -1 && this.database[index].props.processedAt === null) {
+      this.database[index] = this.database[index].with({ claimedAt: null });
     }
     return Promise.resolve();
   }

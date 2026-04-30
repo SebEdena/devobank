@@ -8,7 +8,6 @@ import { PasswordsNotMatchingException } from '../domain/exceptions/passwords-no
 import { UserAlreadyExistsException } from '../domain/exceptions/user-already-exists.exception';
 import { EventService } from 'src/core/services/event.service';
 import { InMemoryEventRepository } from 'src/core/adapters/in-memory-event-repository';
-import { EventStatus } from 'src/core/domain/entities/event.entity';
 import { FixedDateGenerator } from 'src/core/adapters/fixed-date-generator';
 import { USER_CREATED } from '../domain/events';
 
@@ -83,7 +82,8 @@ describe('Feature: signin up a user', () => {
       expect(eventRepository.database[0].props).toMatchObject({
         id: 'id-1',
         type: USER_CREATED,
-        status: EventStatus.PENDING,
+        claimedAt: null,
+        processedAt: null,
         payload: {
           id: 'id-1',
           name: user.props.name,

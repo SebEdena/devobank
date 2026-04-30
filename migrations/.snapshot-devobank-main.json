@@ -53,9 +53,9 @@
           "comment": null,
           "enumItems": []
         },
-        "status": {
-          "name": "status",
-          "type": "text",
+        "payload": {
+          "name": "payload",
+          "type": "jsonb",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
@@ -66,21 +66,32 @@
           "scale": null,
           "default": null,
           "comment": null,
-          "enumItems": [
-            "pending",
-            "processed",
-            "failed"
-          ]
+          "enumItems": []
         },
-        "payload": {
-          "name": "payload",
-          "type": "jsonb",
+        "processed_at": {
+          "name": "processed_at",
+          "type": "timestamptz(6)",
           "unsigned": false,
           "autoincrement": false,
           "primary": false,
-          "nullable": false,
+          "nullable": true,
           "unique": false,
-          "length": null,
+          "length": 6,
+          "precision": null,
+          "scale": null,
+          "default": null,
+          "comment": null,
+          "enumItems": []
+        },
+        "claimed_at": {
+          "name": "claimed_at",
+          "type": "timestamptz(6)",
+          "unsigned": false,
+          "autoincrement": false,
+          "primary": false,
+          "nullable": true,
+          "unique": false,
+          "length": 6,
           "precision": null,
           "scale": null,
           "default": null,
@@ -100,14 +111,7 @@
           "primary": true
         }
       ],
-      "checks": [
-        {
-          "name": "event_status_check",
-          "columnName": "status",
-          "definition": "check (\"status\" in ('pending', 'processed', 'failed'))",
-          "expression": "\"status\" in ('pending', 'processed', 'failed')"
-        }
-      ],
+      "checks": [],
       "foreignKeys": {},
       "nativeEnums": {},
       "comment": null

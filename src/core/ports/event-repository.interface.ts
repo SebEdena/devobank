@@ -4,7 +4,9 @@ import { Event } from '../domain/entities/event.entity';
 export interface IEventRepository {
   create(event: Event): Promise<void>;
 
-  findUnprocessed(): Promise<Event[]>;
+  findUnprocessedBatch(limit: number): Promise<Event[]>;
 
-  update(event: Partial<Event> & { props: { id: string } }): Promise<void>;
+  markProcessed(eventId: string): Promise<void>;
+
+  markUnclaimed(eventId: string): Promise<void>;
 }

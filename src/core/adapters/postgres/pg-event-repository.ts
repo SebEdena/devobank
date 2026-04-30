@@ -1,8 +1,7 @@
 import { EntityManager } from '@mikro-orm/postgresql';
 import { IEventRepository } from 'src/core/ports/event-repository.interface';
 import { PgEvent, PgEventSchema } from './entities/event.pg-entity';
-import { Event, EventStatus } from 'src/core/domain/entities/event.entity';
-import { EventNotFoundException } from 'src/core/domain/exceptions/event-not-found.exception';
+import { Event } from 'src/core/domain/entities/event.entity';
 
 export class PgEventRepository implements IEventRepository {
   constructor(private readonly em: EntityManager) {}
@@ -13,31 +12,44 @@ export class PgEventRepository implements IEventRepository {
     await this.em.flush();
   }
 
-  async findUnprocessed(): Promise<Event[]> {
-    const pgEvents = await this.em.findAll(PgEventSchema, {
-      where: { status: EventStatus.PENDING },
-      orderBy: { occurredAt: 'asc' },
-    });
-
-    return pgEvents.map((pgEvent) => this.toDomain(pgEvent));
+  async findUnprocessedBatch(limit: number): Promise<Event[]> {
+    const sql = `
+      with candidates as (
+        select id from "event"
+        where processed_at is null and claimed_at is null
+        order by occurred_at asc, id asc
+        limit ?
+        for update skip locked
+      ),
+      claimed as (
+        update "event" e
+        set claimed_at = now()
+        from candidates c
+        where e.id = c.id
+        returning e.*
+      )
+      select * from claimed;
+    `;
+    const conn = this.em.getConnection();
+    const rows = await conn.execute<PgEvent[]>(sql, [limit], 'all');
+    return rows.map((r: PgEvent) => this.toDomain(r)) ?? [];
   }
 
-  async update(
-    event: Partial<Event> & {
-      props: {
-        id: string;
-      };
-    },
-  ): Promise<void> {
-    const pgEvent = await this.em.findOne(PgEventSchema, {
-      id: event.props.id,
-    });
-    if (pgEvent) {
-      this.em.assign(pgEvent, event.props);
-      await this.em.flush();
-    } else {
-      throw new EventNotFoundException();
-    }
+  async markProcessed(eventId: string): Promise<void> {
+    await this.em
+      .getConnection()
+      .execute(`update "event" set processed_at = now() where id = ?`, [
+        eventId,
+      ]);
+  }
+
+  async markUnclaimed(eventId: string): Promise<void> {
+    await this.em
+      .getConnection()
+      .execute(
+        `update "event" set claimed_at = null where id = ? and processed_at is null`,
+        [eventId],
+      );
   }
 
   protected toPersistence(event: Event): PgEvent {
@@ -45,7 +57,8 @@ export class PgEventRepository implements IEventRepository {
       id: event.props.id,
       type: event.props.type,
       occurredAt: event.props.occurredAt,
-      status: event.props.status,
+      claimedAt: event.props.claimedAt,
+      processedAt: event.props.processedAt,
       payload: event.props.payload,
     };
   }
@@ -55,7 +68,8 @@ export class PgEventRepository implements IEventRepository {
       id: event.id,
       type: event.type,
       occurredAt: event.occurredAt,
-      status: event.status,
+      claimedAt: event.claimedAt ?? null,
+      processedAt: event.processedAt ?? null,
       payload: event.payload,
     });
   }

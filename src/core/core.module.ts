@@ -12,16 +12,29 @@ import {
   I_EVENT_REPOSITORY,
   IEventRepository,
 } from './ports/event-repository.interface';
+import {
+  I_OUTBOX_LISTENER,
+  IOutboxListener,
+} from './ports/outbox-listener.interface';
 import { EventService } from './services/event.service';
+import { OutboxDispatcherService } from './services/outbox-dispatcher.service';
+import { OutboxEventExecutorService } from './services/outbox-event-executor.service';
 import { PgEventSchema } from './adapters/postgres/entities/event.pg-entity';
 import { PgEventRepository } from './adapters/postgres/pg-event-repository';
+import { PgOutboxListener } from './adapters/postgres/pg-outbox-listener';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { EntityManager } from '@mikro-orm/postgresql';
+import { EventEmitter2, EventEmitterModule } from '@nestjs/event-emitter';
+import { ConfigService } from '@nestjs/config';
+import { Config } from 'src/config';
 
 export const coreEntities = [PgEventSchema];
 
 @Module({
-  imports: [MikroOrmModule.forFeature({ entities: coreEntities })],
+  imports: [
+    MikroOrmModule.forFeature({ entities: coreEntities }),
+    EventEmitterModule.forRoot(),
+  ],
   controllers: [],
   providers: [
     {
@@ -42,6 +55,18 @@ export const coreEntities = [PgEventSchema];
       useFactory: (em: EntityManager) => new PgEventRepository(em),
     },
     {
+      provide: I_OUTBOX_LISTENER,
+      inject: [EventEmitter2, ConfigService],
+      useFactory: (
+        eventEmitter: EventEmitter2,
+        configService: ConfigService,
+      ): IOutboxListener =>
+        new PgOutboxListener(
+          configService.get<string>('mainDatabaseUrl')!,
+          eventEmitter,
+        ),
+    },
+    {
       provide: EventService,
       inject: [I_ID_GENERATOR, I_DATE_GENERATOR, I_EVENT_REPOSITORY],
       useFactory: (
@@ -52,6 +77,8 @@ export const coreEntities = [PgEventSchema];
         return new EventService(idGenerator, dateGenerator, eventRepository);
       },
     },
+    OutboxEventExecutorService,
+    OutboxDispatcherService,
   ],
   exports: [I_DATE_GENERATOR, I_ID_GENERATOR, I_STRING_HASHER, EventService],
 })

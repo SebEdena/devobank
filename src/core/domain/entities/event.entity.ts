@@ -1,16 +1,11 @@
 import { Entity } from 'src/shared/entity';
 
-export enum EventStatus {
-  PENDING = 'pending',
-  PROCESSED = 'processed',
-  FAILED = 'failed',
-}
-
 export type EventProps = {
   id: string;
   type: string;
   occurredAt: Date;
-  status: EventStatus;
+  claimedAt: Date | null;
+  processedAt: Date | null;
   payload: Record<string, any>;
 };
 

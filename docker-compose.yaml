@@ -9,4 +9,10 @@ services:
       POSTGRES_DB: devobank-main
       POSTGRES_USER: devobank
       POSTGRES_PASSWORD: devobank
-  
+
+  queue:
+    image: redis/redis-stack
+    environment:
+      REDIS_ARGS: "--requirepass devobank --user devobank on >devobank ~* allcommands --user default off nopass nocommands"
+    ports:
+      - "6379:6379"

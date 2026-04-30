@@ -11,9 +11,10 @@ import mikroOrmConfig from 'src/mikro-orm.config';
 import { GlobalExceptionFilter } from 'src/shared/global-exception.filter';
 import { MikroORM } from '@mikro-orm/postgresql';
 import { Server } from 'node:net';
+import config from 'src/config';
 
 export class TestApp {
-  private app: NestFastifyApplication;
+  private app!: NestFastifyApplication;
 
   async setup() {
     const module = await Test.createTestingModule({
@@ -24,10 +25,12 @@ export class TestApp {
           ignoreEnvVars: true,
           isGlobal: true,
           load: [
-            () => ({
-              MAIN_DATABASE_URL:
-                'postgresql://devobank:devobank@localhost:5442/devobank-main',
-            }),
+            () =>
+              config({
+                MAIN_DATABASE_URL:
+                  'postgresql://devobank:devobank@localhost:5442/devobank-main',
+                QUEUE_URL: 'redis://devobank:devobank@localhost:6380',
+              }),
           ],
         }),
       ],

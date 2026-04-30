@@ -3,6 +3,7 @@ import {
   IUserRepository,
 } from 'src/users/ports/user-repository.interface';
 import { userSeeds } from 'src/users/tests/user-seeds';
+import { compare } from 'bcrypt';
 import request from 'supertest';
 import { UserFixture } from 'tests/shared/fixtures/user-fixture';
 import { TestApp } from 'tests/shared/utils/test-app';
@@ -44,9 +45,11 @@ describe('Feature: user signup', () => {
       expect(createdUser!.props.id).toEqual(expect.any(String));
       expect(createdUser!.props).toMatchObject({
         email: userToCreate.props.email,
-        password: userToCreate.props.password,
         name: userToCreate.props.name,
       });
+      expect(
+        await compare(userToCreate.props.password, createdUser!.props.password),
+      ).toBe(true);
     });
   });
 

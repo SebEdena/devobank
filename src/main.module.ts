@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { AppModule } from './core/app.module';
 import { LoggerModule } from 'nestjs-pino';
 import { randomUUID } from 'node:crypto';
+import config from './config';
 
 function buildPinoHttpOptions() {
   const isProduction = process.env.NODE_ENV === 'production';
@@ -43,7 +44,10 @@ function buildPinoHttpOptions() {
 @Module({
   imports: [
     AppModule,
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [config],
+    }),
     LoggerModule.forRoot({ pinoHttp: buildPinoHttpOptions() }),
   ],
 })
