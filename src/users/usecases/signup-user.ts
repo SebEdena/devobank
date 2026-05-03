@@ -6,7 +6,8 @@ import { PasswordsNotMatchingException } from '../domain/exceptions/passwords-no
 import { UserAlreadyExistsException } from '../domain/exceptions/user-already-exists.exception';
 import { IIdGenerator } from 'src/core/ports/id-generator.interface';
 import { EventService } from 'src/core/services/event.service';
-import { USER_CREATED, UserCreated } from '../domain/events';
+import { USER_CREATED, type UserCreated } from '../domain/events';
+import { OnEvent } from '@nestjs/event-emitter';
 
 type Request = {
   name: string;
@@ -58,5 +59,10 @@ export class SignupUser implements Executable<Request, Response> {
     });
 
     return { id: user.props.id };
+  }
+
+  @OnEvent('user.created')
+  async onUserCreated(event: UserCreated): Promise<void> {
+    console.log(`User created: ${JSON.stringify(event)}`);
   }
 }

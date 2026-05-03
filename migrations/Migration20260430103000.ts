@@ -13,6 +13,9 @@ export class Migration20260430103000 extends Migration {
       `alter table "event" drop constraint if exists "event_status_check";`,
     );
     this.addSql(`alter table "event" drop column "status";`);
+    this.addSql(
+      `create index "event_unprocessed_claimable_idx" on "event" ("occurred_at", "id") where "processed_at" is null and "claimed_at" is null;`,
+    );
   }
 
   override down(): void | Promise<void> {
@@ -26,6 +29,7 @@ export class Migration20260430103000 extends Migration {
       `alter table "event" add constraint "event_status_check" check ("status" in ('pending', 'processed', 'failed'));`,
     );
 
+    this.addSql(`drop index if exists "event_unprocessed_claimable_idx";`);
     this.addSql(`alter table "event" drop column "claimed_at";`);
     this.addSql(`alter table "event" drop column "processed_at";`);
   }
