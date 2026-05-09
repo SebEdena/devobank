@@ -7,7 +7,7 @@ import {
   FastifyAdapter,
   type NestFastifyApplication,
 } from '@nestjs/platform-fastify';
-import mikroOrmConfig from 'src/mikro-orm.config';
+import mikroOrmConfig from 'src/mikro-orm.write.config';
 import { GlobalExceptionFilter } from 'src/shared/global-exception.filter';
 import { MikroORM } from '@mikro-orm/postgresql';
 import { Server } from 'node:net';

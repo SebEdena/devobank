@@ -10,6 +10,17 @@ services:
       POSTGRES_USER: devobank
       POSTGRES_PASSWORD: devobank
 
+  read-db:
+    image: postgres:17-alpine
+    ports:
+      - "5433:5432"
+    volumes:
+      - .data/read-db:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: devobank-read
+      POSTGRES_USER: devobank
+      POSTGRES_PASSWORD: devobank
+
   queue:
     image: redis/redis-stack
     environment:

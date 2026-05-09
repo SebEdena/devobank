@@ -26,7 +26,6 @@ import { MikroOrmModule } from '@mikro-orm/nestjs';
 import { EntityManager } from '@mikro-orm/postgresql';
 import { EventEmitter2, EventEmitterModule } from '@nestjs/event-emitter';
 import { ConfigService } from '@nestjs/config';
-import { Config } from 'src/config';
 
 export const coreEntities = [PgEventSchema];
 

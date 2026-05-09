@@ -7,3 +7,14 @@ services:
       POSTGRES_DB: devobank-main
       POSTGRES_USER: devobank
       POSTGRES_PASSWORD: devobank
+
+  read-db-test:
+    image: postgres:17-alpine
+    ports:
+      - "5443:5432"
+    environment:
+      POSTGRES_DB: devobank-read
+      POSTGRES_USER: devobank
+      POSTGRES_PASSWORD: devobank
+
+  

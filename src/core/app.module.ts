@@ -4,7 +4,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CoreModule } from './core.module';
 import { MikroOrmModule } from '@mikro-orm/nestjs';
-import mikroOrmConfig from 'src/mikro-orm.config';
+import writeOrmConfig from 'src/mikro-orm.write.config';
+// import readOrmConfig from 'src/mikro-orm.read.config';
 import { APP_PIPE } from '@nestjs/core';
 import { ZodValidationPipe } from 'nestjs-zod';
 import { AuthModule } from 'src/auth/auth.module';
@@ -12,7 +13,11 @@ import { AuthModule } from 'src/auth/auth.module';
 @Module({
   imports: [
     CoreModule,
-    MikroOrmModule.forRoot(mikroOrmConfig),
+    MikroOrmModule.forRoot(writeOrmConfig),
+    // MikroOrmModule.forRoot({
+    //   ...readOrmConfig,
+    //   contextName: 'read',
+    // }),
     AuthModule,
     UsersModule,
   ],

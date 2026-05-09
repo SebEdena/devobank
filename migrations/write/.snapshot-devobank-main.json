@@ -1,6 +1,8 @@
 {
   "name": "public",
-  "namespaces": ["public"],
+  "namespaces": [
+    "public"
+  ],
   "tables": [
     {
       "name": "event",
@@ -99,21 +101,26 @@
       },
       "indexes": [
         {
-          "columnNames": ["occurred_at", "id"],
+          "columnNames": [
+            "id"
+          ],
+          "composite": false,
+          "constraint": false,
+          "keyName": "event_pkey",
+          "unique": true,
+          "primary": true
+        },
+        {
+          "columnNames": [
+            "occurred_at",
+            "id"
+          ],
           "composite": true,
           "constraint": false,
           "keyName": "event_unprocessed_claimable_idx",
           "unique": false,
           "primary": false,
           "expression": "CREATE INDEX event_unprocessed_claimable_idx ON public.event USING btree (occurred_at, id) WHERE ((processed_at IS NULL) AND (claimed_at IS NULL))"
-        },
-        {
-          "columnNames": ["id"],
-          "composite": false,
-          "constraint": false,
-          "keyName": "event_pkey",
-          "unique": true,
-          "primary": true
         }
       ],
       "checks": [],
@@ -188,7 +195,9 @@
       },
       "indexes": [
         {
-          "columnNames": ["email"],
+          "columnNames": [
+            "email"
+          ],
           "composite": false,
           "constraint": true,
           "keyName": "user_email_unique",
@@ -196,7 +205,9 @@
           "primary": false
         },
         {
-          "columnNames": ["id"],
+          "columnNames": [
+            "id"
+          ],
           "composite": false,
           "constraint": false,
           "keyName": "user_pkey",

@@ -18,14 +18,20 @@
     "test:cov": " jest --config jest.config.ts --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand  jest --config jest.config.ts",
     "test:int": "TS_NODE_PROJECT=tsconfig.jest.setup.json NODE_OPTIONS=--experimental-vm-modules jest --config jest.config.int.ts",
-    "orm": "mikro-orm",
-    "orm:migration:create": "npm run orm -- migration:create",
-    "orm:migration:up": "npm run orm -- migration:up",
-    "orm:migration:down": "npm run orm -- migration:down",
-    "orm:migration:list": "npm run orm -- migration:list",
-    "orm:migration:pending": "npm run orm -- migration:pending",
-    "orm:migration:check": "npm run orm -- migration:check",
-    "orm:migration:fresh": "npm run orm -- migration:fresh"
+    "orm:write:migration:create": "mikro-orm migration:create --config src/mikro-orm.write.config.ts",
+    "orm:write:migration:up": "mikro-orm migration:up --config src/mikro-orm.write.config.ts",
+    "orm:write:migration:down": "mikro-orm migration:down --config src/mikro-orm.write.config.ts",
+    "orm:write:migration:list": "mikro-orm migration:list --config src/mikro-orm.write.config.ts",
+    "orm:write:migration:pending": "mikro-orm migration:pending --config src/mikro-orm.write.config.ts",
+    "orm:write:migration:check": "mikro-orm migration:check --config src/mikro-orm.write.config.ts",
+    "orm:write:migration:fresh": "mikro-orm migration:fresh --config src/mikro-orm.write.config.ts",
+    "orm:read:migration:create": "mikro-orm migration:create --config src/mikro-orm.read.config.ts",
+    "orm:read:migration:up": "mikro-orm migration:up --config src/mikro-orm.read.config.ts",
+    "orm:read:migration:down": "mikro-orm migration:down --config src/mikro-orm.read.config.ts",
+    "orm:read:migration:list": "mikro-orm migration:list --config src/mikro-orm.read.config.ts",
+    "orm:read:migration:pending": "mikro-orm migration:pending --config src/mikro-orm.read.config.ts",
+    "orm:read:migration:check": "mikro-orm migration:check --config src/mikro-orm.read.config.ts",
+    "orm:read:migration:fresh": "mikro-orm migration:fresh --config src/mikro-orm.read.config.ts"
   },
   "dependencies": {
     "@fastify/static": "^9.1.1",
@@ -41,7 +47,6 @@
     "@nestjs/event-emitter": "^3.0.1",
     "@nestjs/platform-fastify": "^11.1.17",
     "@nestjs/swagger": "^11.3.0",
-    "@types/bcrypt": "^6.0.0",
     "bcrypt": "^6.0.0",
     "bullmq": "^5.76.4",
     "dotenv": "^17.4.1",
@@ -60,8 +65,9 @@
     "@nestjs/cli": "^11.0.0",
     "@nestjs/schematics": "^11.0.0",
     "@nestjs/testing": "^11.0.1",
+    "@types/bcrypt": "^6.0.0",
     "@types/jest": "^30.0.0",
-    "@types/node": "^22.10.7",
+    "@types/node": "^24.12.3",
     "@types/pg": "^8.20.0",
     "@types/supertest": "^6.0.2",
     "@types/uuid": "^10.0.0",
@@ -87,9 +93,6 @@
     "glob": "^13.0.0"
   },
   "mikro-orm": {
-    "useTsNode": true,
-    "configPaths": [
-      "./src/mikro-orm.config.ts"
-    ]
+    "useTsNode": true
   }
 }
